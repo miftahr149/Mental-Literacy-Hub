@@ -6,6 +6,7 @@ import java.util.List;
 
 public class MentalHealthChallenge {
 
+  private int id;
   private String title;
   private String description;
   private String creator;
@@ -14,6 +15,7 @@ public class MentalHealthChallenge {
   private ArrayList<String> activities;
 
   private MentalHealthChallenge(Builder builder) {
+    this.id = builder.id;
     this.title = builder.title;
     this.description = builder.description;
     this.creator = builder.creator;
@@ -23,12 +25,18 @@ public class MentalHealthChallenge {
   }
 
   public static class Builder {
+    private int id;
     private String title;
     private String description;
     private String creator;
     private int totalDays;
     private int progressDays;
     private ArrayList<String> activities;
+
+    public Builder id(int id) {
+      this.id = id;
+      return this;
+    }
 
     public Builder title(String title) {
       this.title = title;
@@ -66,25 +74,25 @@ public class MentalHealthChallenge {
   }
 
   public static List<MentalHealthChallenge> getAll() {
-    return Arrays.asList(new Builder().title("30-Day Gratitude Journey").description(
+    return Arrays.asList(new Builder().id(1).title("30-Day Gratitude Journey").description(
         "Develop a daily gratitude practice to improve mental well-being and positive thinking.")
         .creator("Dr. Sarah Johnson").totalDays(30).progressDays(2)
         .activities(new ArrayList<>(Arrays.asList("Write a gratitude journal",
             "Share gratitude with others", "Reflect on positive moments")))
         .build(),
-        new Builder().title("Mindful Breathing Challenge").description(
+        new Builder().id(2).title("Mindful Breathing Challenge").description(
             "Practice mindfulness through daily breathing exercises to reduce stress and anxiety.")
             .creator("Dr. Michael Chen").totalDays(21).progressDays(1)
             .activities(new ArrayList<>(Arrays.asList("Morning breathing exercise",
                 "Midday mindfulness", "Evening relaxation")))
             .build(),
-        new Builder().title("Self-Compassion Practice").description(
+        new Builder().id(3).title("Self-Compassion Practice").description(
             "Learn to treat yourself with kindness and understanding through daily self-compassion exercises.")
             .creator("Dr. Sarah Johnson").totalDays(14).progressDays(0)
             .activities(new ArrayList<>(Arrays.asList("Daily affirmations",
                 "Self-compassion meditation", "Journaling self-kindness")))
             .build(),
-        new Builder().title("Stress Management Workshop")
+        new Builder().id(4).title("Stress Management Workshop")
             .description(
                 "Learn effective techniques to manage stress and improve your mental resilience.")
             .creator("Dr. Emily Carter").totalDays(10).progressDays(5)
@@ -94,6 +102,10 @@ public class MentalHealthChallenge {
   }
 
   // Getters
+  public int getId() {
+    return id;
+  }
+
   public String getTitle() {
     return title;
   }

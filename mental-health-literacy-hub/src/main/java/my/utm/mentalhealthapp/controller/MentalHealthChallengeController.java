@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.servlet.ModelAndView;
 import javax.servlet.http.HttpSession;
 
@@ -16,7 +17,7 @@ public class MentalHealthChallengeController {
 
   @GetMapping("/")
   public ModelAndView home(HttpSession session) {
-    ModelAndView modelAndView = new ModelAndView("mental_health_challenge");
+    ModelAndView modelAndView = new ModelAndView("display_mental_health_challenge");
     if (session.getAttribute("userRole") == null) {
       modelAndView.setViewName("redirect:/mental-health-challenge/demo");
       return modelAndView;
@@ -37,5 +38,19 @@ public class MentalHealthChallengeController {
       HttpSession session) {
     session.setAttribute("userRole", role);
     return "redirect:/mental-health-challenge/";
+  }
+
+  @GetMapping("/challenge/{id}")
+  public ModelAndView challengeDetails(@PathVariable("id") int id) {
+    MentalHealthChallenge challenge = MentalHealthChallenge.getAll().stream()
+        .filter(c -> c.getId() == id).findFirst().orElse(null);
+
+    ModelAndView modelAndView = new ModelAndView("challenge_details");
+    if (challenge != null) {
+      modelAndView.addObject("challenge", challenge);
+    } else {
+      modelAndView.setViewName("redirect:/mental-health-challenge/");
+    }
+    return modelAndView;
   }
 }

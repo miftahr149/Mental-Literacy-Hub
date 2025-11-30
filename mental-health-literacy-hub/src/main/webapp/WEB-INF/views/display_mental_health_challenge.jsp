@@ -29,11 +29,11 @@
                       
                       <c:choose>
                         <c:when test="${challenge.progressDays == 0}">
-                          <button class="btn btn-primary">Start Challenge</button>
+                          <a class="btn btn-primary" href="${pageContext.request.contextPath}/mental-health-challenge/challenge/${challenge.id}">Start Challenge</a>
                         </c:when>
                         <c:otherwise>
                           <p>Your Progress: ${challenge.progressDays} / ${challenge.totalDays} days</p>
-                          <button class="btn btn-primary">Continue</button>
+                          <a class="btn btn-primary" href="${pageContext.request.contextPath}/mental-health-challenge/challenge/${challenge.id}">Continue</a>
                         </c:otherwise>
                       </c:choose>
                     </div>

@@ -2,15 +2,19 @@ package my.utm.mentalhealthapp.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.servlet.ModelAndView;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 import javax.servlet.http.HttpSession;
-
+import my.utm.mentalhealthapp.model.DailyReflection;
 import my.utm.mentalhealthapp.model.Feeling;
 import my.utm.mentalhealthapp.model.MentalHealthChallenge;
 
@@ -58,6 +62,21 @@ public class MentalHealthChallengeController {
     } else {
       modelAndView.setViewName("redirect:/mental-health-challenge/");
     }
+    return modelAndView;
+  }
+
+
+  @PostMapping("/challenge/{id}/submit")
+  public ModelAndView submitDailyReflection(@ModelAttribute DailyReflection reflection,
+      @PathVariable int id) {
+
+    reflection.setMentalHealthChallengeID(id);
+    reflection.setDate(LocalDateTime.now());
+    MentalHealthChallenge challenge = MentalHealthChallenge.getChallengeById(id);
+    challenge.addDailyReflection(reflection);
+
+    String viewName = String.format("redirect:/mental-health-challenge/challenge/%d", id);
+    ModelAndView modelAndView = new ModelAndView(viewName);
     return modelAndView;
   }
 }

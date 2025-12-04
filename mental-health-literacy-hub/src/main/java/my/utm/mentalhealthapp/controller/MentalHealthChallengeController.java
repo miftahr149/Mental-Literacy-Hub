@@ -80,4 +80,22 @@ public class MentalHealthChallengeController {
     ModelAndView modelAndView = new ModelAndView(viewName);
     return modelAndView;
   }
+
+  @GetMapping("/challenge/{id}/progress")
+  public ModelAndView challengeProgress(@PathVariable int id) {
+    MentalHealthChallenge challenge = MentalHealthChallenge.getChallengeById(id);
+
+    ModelAndView modelAndView = new ModelAndView("challenge_progress");
+
+    List<Feeling> feelings = Arrays.asList(Feeling.values());
+    modelAndView.addObject("mode", "progress");
+
+
+    if (challenge != null) {
+      modelAndView.addObject("challenge", challenge);
+    } else {
+      modelAndView.setViewName("redirect:/mental-health-challenge/");
+    }
+    return modelAndView;
+  }
 }

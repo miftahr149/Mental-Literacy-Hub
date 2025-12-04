@@ -42,8 +42,7 @@ public class MentalHealthChallengeController {
 
   @GetMapping("/challenge/{id}")
   public ModelAndView challengeDetails(@PathVariable("id") int id) {
-    MentalHealthChallenge challenge = MentalHealthChallenge.getAll().stream()
-        .filter(c -> c.getId() == id).findFirst().orElse(null);
+    MentalHealthChallenge challenge = MentalHealthChallenge.getChallengeById(id);
 
     ModelAndView modelAndView = new ModelAndView("challenge_details");
     if (challenge != null) {

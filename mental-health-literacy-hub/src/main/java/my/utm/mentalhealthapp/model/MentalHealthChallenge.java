@@ -128,5 +128,7 @@ public class MentalHealthChallenge {
 
   public ArrayList<String> getActivities() {
     return activities;
+  public static MentalHealthChallenge getChallengeById(int id) {
+    return getAll().stream().filter(c -> c.getId() == id).findFirst().orElse(null);
   }
 }

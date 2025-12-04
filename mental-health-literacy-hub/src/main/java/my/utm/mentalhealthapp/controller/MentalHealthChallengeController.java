@@ -7,8 +7,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.servlet.ModelAndView;
+import java.util.Arrays;
+import java.util.List;
 import javax.servlet.http.HttpSession;
 
+import my.utm.mentalhealthapp.model.Feeling;
 import my.utm.mentalhealthapp.model.MentalHealthChallenge;
 
 @Controller
@@ -45,6 +48,11 @@ public class MentalHealthChallengeController {
     MentalHealthChallenge challenge = MentalHealthChallenge.getChallengeById(id);
 
     ModelAndView modelAndView = new ModelAndView("challenge_details");
+
+    List<Feeling> feelings = Arrays.asList(Feeling.values());
+    modelAndView.addObject("feelings", feelings);
+
+
     if (challenge != null) {
       modelAndView.addObject("challenge", challenge);
     } else {

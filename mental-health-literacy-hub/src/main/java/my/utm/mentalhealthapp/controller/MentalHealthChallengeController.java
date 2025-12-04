@@ -55,6 +55,7 @@ public class MentalHealthChallengeController {
 
     List<Feeling> feelings = Arrays.asList(Feeling.values());
     modelAndView.addObject("feelings", feelings);
+    modelAndView.addObject("mode", "overview");
 
 
     if (challenge != null) {

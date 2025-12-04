@@ -36,9 +36,9 @@
         </div>
       </section>
 
-      <section class="card d-flex justify-content-center mb-4 p-2 gap-2">
-          <button class="btn btn-primary mx-2" disabled>Overview</button>
-          <button class="btn btn-secondary mx-2">My Progress</button>
+      <section class="card flex-row mb-4 p-2 gap-2">
+          <button class="btn btn-primary mx-2 flex-grow-1" disabled>Overview</button>
+          <button class="btn btn-secondary mx-2 flex-grow-1">My Progress</button>
       </section>
       
       <section class="card p-4 mb-4">

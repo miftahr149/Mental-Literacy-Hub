@@ -61,7 +61,7 @@
 
       reflection.addEventListener("input", (event) => {
         const reflectionLength = event.target.value.length;
-        counter.textContent = reflectionLength + " charcters";
+        counter.textContent = reflectionLength + " characters";
       });
 
       dailyReflectionForm.addEventListener("change", (event) => {

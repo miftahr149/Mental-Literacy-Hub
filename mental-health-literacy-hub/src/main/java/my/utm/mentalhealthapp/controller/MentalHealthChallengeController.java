@@ -194,4 +194,23 @@ public class MentalHealthChallengeController {
     MentalHealthChallengeType.add(challengeType);
     return returnView;
   }
+
+  @PostMapping("/challenge/{id}/update")
+  public String createChallenge(@RequestParam String title, @RequestParam String description,
+      @RequestParam int totalDays, @RequestParam List<String> activities, @PathVariable int id,
+      HttpSession session) {
+
+    String returnView = String.format("redirect:/mental-health-challenge/challenge/%d/", id);
+    String userRole = (String) session.getAttribute("userRole");
+
+    if (!userRole.equals("mhp")) {
+      return returnView;
+    }
+
+    MentalHealthChallengeType existingChallengeType = MentalHealthChallengeType.getById(id);
+    existingChallengeType.setTitle(title).setDescription(description).setTotalDays(totalDays)
+        .setActivities(new ArrayList<>(activities));
+
+    return returnView;
+  }
 }

@@ -56,7 +56,7 @@
         </div>
 
         <form
-          action="${pageContext.request.contextPath}/mental-health-challenge/create"
+          action="${pageContext.request.contextPath}/mental-health-challenge/challenge/${challengeType.id}/update"
           method="post"
         >
           <div class="modal-body p-4">
@@ -140,7 +140,7 @@
               type="submit"
               class="btn btn-primary create-btn flex-grow-1 py-2"
             >
-              Create Challenge
+              Edit Challenge
             </button>
           </div>
         </form>

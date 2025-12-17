@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.servlet.ModelAndView;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
@@ -172,5 +173,25 @@ public class MentalHealthChallengeController {
       modelAndView.setViewName("redirect:/mental-health-challenge/");
     }
     return modelAndView;
+  }
+
+  @PostMapping("/create")
+  public String createChallenge(@RequestParam String title, @RequestParam String description,
+      @RequestParam int totalDays, @RequestParam List<String> activities, HttpSession session) {
+
+    String returnView = "redirect:/mental-health-challenge/";
+    String userRole = (String) session.getAttribute("userRole");
+
+    if (!userRole.equals("mhp")) {
+      return returnView;
+    }
+
+    String user = getUserFromSession(session);
+    MentalHealthChallengeType challengeType =
+        new MentalHealthChallengeType().setTitle(title).setDescription(description)
+            .setTotalDays(totalDays).setActivities(new ArrayList<>(activities)).setCreator(user);
+
+    MentalHealthChallengeType.add(challengeType);
+    return returnView;
   }
 }

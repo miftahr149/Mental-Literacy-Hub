@@ -12,24 +12,24 @@ public class MentalHealthChallengeType {
   private int totalDays;
   private ArrayList<String> activities;
 
+  private static int idCounter = 0;
   private static List<MentalHealthChallengeType> list = new ArrayList<>(Arrays.asList(
-      new MentalHealthChallengeType().setId(1).setTitle("30-Day Gratitude Journey").setDescription(
+      new MentalHealthChallengeType().setTitle("30-Day Gratitude Journey").setDescription(
           "Develop a daily gratitude practice to improve mental well-being and positive thinking.")
           .setCreator("Dr. Sarah Johnson").setTotalDays(30).setActivities(
               new ArrayList<>(Arrays.asList("Write a gratitude journal",
                   "Share gratitude with others", "Reflect on positive moments"))),
-      new MentalHealthChallengeType().setId(2).setTitle("Mindful Breathing Challenge")
-          .setDescription(
-              "Practice mindfulness through daily breathing exercises to reduce stress and anxiety.")
+      new MentalHealthChallengeType().setTitle("Mindful Breathing Challenge").setDescription(
+          "Practice mindfulness through daily breathing exercises to reduce stress and anxiety.")
           .setCreator("Dr. Michael Chen").setTotalDays(21)
           .setActivities(new ArrayList<>(Arrays.asList("Morning breathing exercise",
               "Midday mindfulness", "Evening relaxation"))),
-      new MentalHealthChallengeType().setId(3).setTitle("Self-Compassion Practice").setDescription(
+      new MentalHealthChallengeType().setTitle("Self-Compassion Practice").setDescription(
           "Learn to treat yourself with kindness and understanding through daily self-compassion exercises.")
           .setCreator("Dr. Sarah Johnson").setTotalDays(14)
           .setActivities(new ArrayList<>(Arrays.asList("Daily affirmations",
               "Self-compassion meditation", "Journaling self-kindness"))),
-      new MentalHealthChallengeType().setId(4).setTitle("Stress Management Workshop")
+      new MentalHealthChallengeType().setTitle("Stress Management Workshop")
           .setDescription(
               "Learn effective techniques to manage stress and improve your mental resilience.")
           .setCreator("Dr. Emily Carter").setTotalDays(10)
@@ -37,7 +37,7 @@ public class MentalHealthChallengeType {
               "Practice stress-relief techniques", "Develop a stress management plan")))));
 
   public MentalHealthChallengeType() {
-
+    this.setId(this.getNextId());
   }
 
   /* Setter Method */
@@ -97,6 +97,10 @@ public class MentalHealthChallengeType {
   }
 
   /* Static Method */
+  private static int getNextId() {
+    return ++idCounter;
+  }
+
   public static List<MentalHealthChallengeType> getAll() {
     return list;
   }
@@ -111,5 +115,9 @@ public class MentalHealthChallengeType {
 
   public static void removeById(int id) {
     getAll().removeIf(c -> c.getId() == id);
+  }
+
+  public static void add(MentalHealthChallengeType challengeType) {
+    list.add(challengeType);
   }
 }

@@ -97,6 +97,25 @@ public class MentalHealthChallengeController {
     return modelAndView;
   }
 
+  @GetMapping("/challenge/{id}/manage")
+  public ModelAndView manageChallengeDetails(@PathVariable("id") int id, HttpSession session) {
+    ModelAndView errorView = new ModelAndView("redirect:/mental-health-challenge/");
+
+    String userRole = (String) session.getAttribute("userRole");
+    if (!userRole.equals("mhp")) {
+      return errorView;
+    }
+
+    String username = this.getUserFromSession(session);
+    MentalHealthChallengeType challengeType = MentalHealthChallengeType.getById(id);
+    if (!challengeType.getCreator().equals(username)) {
+      return errorView;
+    }
+
+    ModelAndView modelAndView = new ModelAndView("manage_challenge_details");
+    modelAndView.addObject("challengeType", challengeType);
+    return modelAndView;
+  }
 
   @PostMapping("/challenge/{id}/submit")
   public ModelAndView submitDailyReflection(@ModelAttribute DailyReflection reflection,

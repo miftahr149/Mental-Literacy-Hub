@@ -32,7 +32,7 @@
                   <p class="card-text">${challenge.description}</p>
                   <p class="card-text text-muted">${challenge.creator}</p>
                   
-                  <a class="btn btn-primary" href="${pageContext.request.contextPath}/mental-health-challenge/challenge/${challenge.id}">view details</a>
+                  <a class="btn btn-primary" href="${pageContext.request.contextPath}/mental-health-challenge/challenge/${challenge.id}/manage">view details</a>
                 </div>
               </div>
             </div>

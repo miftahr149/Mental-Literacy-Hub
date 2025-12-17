@@ -12,7 +12,7 @@ public class MentalHealthChallenge {
   private String user;
   private ArrayList<DailyReflection> dailyReflections;
 
-  private static List<MentalHealthChallenge> list = Arrays.asList(
+  private static List<MentalHealthChallenge> list = new ArrayList<>(Arrays.asList(
       new MentalHealthChallenge().setTChallengeType(MentalHealthChallengeType.getById(1))
           .setUser("user")
           .setDailyReflections(new ArrayList<>(Arrays.asList(
@@ -39,7 +39,7 @@ public class MentalHealthChallenge {
           .setDailyReflections(new ArrayList<>(Arrays.asList(
               new DailyReflection(4, "Feeling calm", "Good", LocalDateTime.now().minusDays(1)),
               new DailyReflection(4, "Reflecting on positive moments", "Great",
-                  LocalDateTime.now())))));
+                  LocalDateTime.now()))))));
 
 
   public MentalHealthChallenge() {
@@ -155,5 +155,9 @@ public class MentalHealthChallenge {
 
   public static List<MentalHealthChallenge> getByUser(String user) {
     return getAll().stream().filter(c -> c.getUser().equals(user)).toList();
+  }
+
+  public static void removeById(int id) {
+    getAll().removeIf(c -> c.getId() == id);
   }
 }

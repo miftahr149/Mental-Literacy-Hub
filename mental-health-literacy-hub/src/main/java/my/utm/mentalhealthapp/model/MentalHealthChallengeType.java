@@ -12,7 +12,7 @@ public class MentalHealthChallengeType {
   private int totalDays;
   private ArrayList<String> activities;
 
-  private static List<MentalHealthChallengeType> list = Arrays.asList(
+  private static List<MentalHealthChallengeType> list = new ArrayList<>(Arrays.asList(
       new MentalHealthChallengeType().setId(1).setTitle("30-Day Gratitude Journey").setDescription(
           "Develop a daily gratitude practice to improve mental well-being and positive thinking.")
           .setCreator("Dr. Sarah Johnson").setTotalDays(30).setActivities(
@@ -34,7 +34,7 @@ public class MentalHealthChallengeType {
               "Learn effective techniques to manage stress and improve your mental resilience.")
           .setCreator("Dr. Emily Carter").setTotalDays(10)
           .setActivities(new ArrayList<>(Arrays.asList("Identify stress triggers",
-              "Practice stress-relief techniques", "Develop a stress management plan"))));
+              "Practice stress-relief techniques", "Develop a stress management plan")))));
 
   public MentalHealthChallengeType() {
 
@@ -107,5 +107,9 @@ public class MentalHealthChallengeType {
 
   public static List<MentalHealthChallengeType> getByCreator(String creator) {
     return getAll().stream().filter(c -> c.getCreator().equals(creator)).toList();
+  }
+
+  public static void removeById(int id) {
+    getAll().removeIf(c -> c.getId() == id);
   }
 }

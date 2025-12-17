@@ -44,6 +44,10 @@ public class MentalHealthChallengeController {
   public String handleDemoRoleSelection(@RequestParam(name = "role", required = true) String role,
       HttpSession session) {
     session.setAttribute("userRole", role);
+
+    String username = role.equals("student") ? "user" : "Sarah Johnson";
+    session.setAttribute("username", username);
+
     return "redirect:/mental-health-challenge/";
   }
 

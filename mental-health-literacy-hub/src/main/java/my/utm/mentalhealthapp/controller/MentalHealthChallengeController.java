@@ -41,7 +41,7 @@ public class MentalHealthChallengeController {
     ModelAndView modelAndView = new ModelAndView("manage_mental_health_challenge");
 
     String user = this.getUserFromSession(session);
-    modelAndView.addObject("challenges", MentalHealthChallengeType.getByCreator(user));
+    modelAndView.addObject("challengeTypes", MentalHealthChallengeType.getByCreator(user));
 
     return modelAndView;
   }
@@ -71,7 +71,7 @@ public class MentalHealthChallengeController {
       HttpSession session) {
     session.setAttribute("userRole", role);
 
-    String username = role.equals("student") ? "user" : "Sarah Johnson";
+    String username = role.equals("student") ? "user" : "Dr. Sarah Johnson";
     session.setAttribute("username", username);
 
     return "redirect:/mental-health-challenge/";

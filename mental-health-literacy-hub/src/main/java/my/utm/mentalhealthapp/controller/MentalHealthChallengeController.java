@@ -22,6 +22,11 @@ import my.utm.mentalhealthapp.model.MentalHealthChallenge;
 @RequestMapping("/mental-health-challenge")
 public class MentalHealthChallengeController {
 
+  private String getUserFromSession(HttpSession session) {
+    String user = (String) session.getAttribute("username");
+    return user;
+  }
+
   @GetMapping("/")
   public ModelAndView home(HttpSession session) {
     ModelAndView modelAndView = new ModelAndView("display_mental_health_challenge");
@@ -52,8 +57,9 @@ public class MentalHealthChallengeController {
   }
 
   @GetMapping("/challenge/{id}")
-  public ModelAndView challengeDetails(@PathVariable("id") int id) {
-    MentalHealthChallenge challenge = MentalHealthChallenge.getChallengeById(id);
+  public ModelAndView challengeDetails(@PathVariable("id") int id, HttpSession session) {
+    String user = this.getUserFromSession(session);
+    MentalHealthChallenge challenge = MentalHealthChallenge.getUserChallengeById(user, id);
 
     ModelAndView modelAndView = new ModelAndView("challenge_details");
 
@@ -73,11 +79,13 @@ public class MentalHealthChallengeController {
 
   @PostMapping("/challenge/{id}/submit")
   public ModelAndView submitDailyReflection(@ModelAttribute DailyReflection reflection,
-      @PathVariable int id) {
+      @PathVariable int id, HttpSession session) {
+
+    String user = this.getUserFromSession(session);
 
     reflection.setMentalHealthChallengeID(id);
     reflection.setDate(LocalDateTime.now());
-    MentalHealthChallenge challenge = MentalHealthChallenge.getChallengeById(id);
+    MentalHealthChallenge challenge = MentalHealthChallenge.getUserChallengeById(user, id);
     challenge.addDailyReflection(reflection);
 
     String viewName = String.format("redirect:/mental-health-challenge/challenge/%d", id);
@@ -86,8 +94,9 @@ public class MentalHealthChallengeController {
   }
 
   @GetMapping("/challenge/{id}/progress")
-  public ModelAndView challengeProgress(@PathVariable int id) {
-    MentalHealthChallenge challenge = MentalHealthChallenge.getChallengeById(id);
+  public ModelAndView challengeProgress(@PathVariable int id, HttpSession session) {
+    String user = this.getUserFromSession(session);
+    MentalHealthChallenge challenge = MentalHealthChallenge.getUserChallengeById(user, id);
 
     ModelAndView modelAndView = new ModelAndView("challenge_progress");
 

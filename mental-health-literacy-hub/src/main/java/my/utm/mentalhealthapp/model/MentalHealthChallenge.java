@@ -149,5 +149,11 @@ public class MentalHealthChallenge {
     return list;
   }
 
+  public static MentalHealthChallenge getUserChallengeById(String user, int id) {
+    return getByUser(user).stream().filter(c -> c.getId() == id).findFirst().orElse(null);
+  }
+
+  public static List<MentalHealthChallenge> getByUser(String user) {
+    return getAll().stream().filter(c -> c.getUser().equals(user)).toList();
   }
 }

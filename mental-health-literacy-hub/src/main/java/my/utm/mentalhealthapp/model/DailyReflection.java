@@ -35,4 +35,24 @@ public class DailyReflection {
   public void setDate(LocalDateTime date) {
     this.date = date;
   }
+
+  public int getMentalHealthChallengeID() {
+    return this.mentalHealthChallengeID;
+  }
+
+  public String getReflection() {
+    return this.reflection;
+  }
+
+  public String getDate() {
+    return this.date.toString();
+  }
+
+  public LocalDateTime getLocalDate() {
+    return this.date;
+  }
+
+  public Feeling getFeeling() {
+    return this.feeling;
+  }
 }

@@ -17,6 +17,7 @@ import javax.servlet.http.HttpSession;
 import my.utm.mentalhealthapp.model.DailyReflection;
 import my.utm.mentalhealthapp.model.Feeling;
 import my.utm.mentalhealthapp.model.MentalHealthChallenge;
+import my.utm.mentalhealthapp.model.MentalHealthChallengeType;
 
 @Controller
 @RequestMapping("/mental-health-challenge")
@@ -27,15 +28,35 @@ public class MentalHealthChallengeController {
     return user;
   }
 
+  private ModelAndView setStudentHome(HttpSession session) {
+    ModelAndView modelAndView = new ModelAndView("display_mental_health_challenge");
+
+    String user = this.getUserFromSession(session);
+    modelAndView.addObject("challenges", MentalHealthChallenge.getByUser(user));
+
+    return modelAndView;
+  }
+
+  private ModelAndView setMHPHome(HttpSession session) {
+    ModelAndView modelAndView = new ModelAndView("manage_mental_health_challenge");
+
+    String user = this.getUserFromSession(session);
+    modelAndView.addObject("challenges", MentalHealthChallengeType.getByCreator(user));
+
+    return modelAndView;
+  }
+
+
   @GetMapping("/")
   public ModelAndView home(HttpSession session) {
-    ModelAndView modelAndView = new ModelAndView("display_mental_health_challenge");
-    if (session.getAttribute("userRole") == null) {
-      modelAndView.setViewName("redirect:/mental-health-challenge/demo");
-      return modelAndView;
+    String userRole = (String) session.getAttribute("userRole");
+
+    if (userRole == null) {
+      return new ModelAndView("redirect:/mental-health-challenge/demo");
     }
 
-    modelAndView.addObject("challenges", MentalHealthChallenge.getAll());
+    boolean isStudent = userRole.equals("student");
+    ModelAndView modelAndView = isStudent ? this.setStudentHome(session) : this.setMHPHome(session);
     return modelAndView;
   }
 

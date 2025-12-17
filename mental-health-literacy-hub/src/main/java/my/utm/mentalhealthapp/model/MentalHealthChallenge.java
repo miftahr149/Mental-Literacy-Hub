@@ -1,5 +1,6 @@
 package my.utm.mentalhealthapp.model;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -7,158 +8,146 @@ import java.util.List;
 
 public class MentalHealthChallenge {
 
-  private int id;
-  private String title;
-  private String description;
-  private String creator;
-  private int totalDays;
-  private ArrayList<String> activities;
+  private MentalHealthChallengeType tChallengeType;
+  private String user;
   private ArrayList<DailyReflection> dailyReflections;
 
-  private static List<MentalHealthChallenge> list = Arrays.asList(new Builder().id(1)
-      .title("30-Day Gratitude Journey")
-      .description(
-          "Develop a daily gratitude practice to improve mental well-being and positive thinking.")
-      .creator("Dr. Sarah Johnson").totalDays(30)
-      .activities(new ArrayList<>(Arrays.asList("Write a gratitude journal",
-          "Share gratitude with others", "Reflect on positive moments")))
-      .dailyReflections(new ArrayList<>(Arrays.asList(
-          new DailyReflection(1, "Feeling grateful", "Good", LocalDateTime.now().minusDays(1)),
-          new DailyReflection(1, "Reflecting on positive moments", "Great", LocalDateTime.now()))))
-      .build(),
-      new Builder().id(2).title("Mindful Breathing Challenge").description(
-          "Practice mindfulness through daily breathing exercises to reduce stress and anxiety.")
-          .creator("Dr. Michael Chen").totalDays(21)
-          .activities(new ArrayList<>(Arrays.asList("Morning breathing exercise",
-              "Midday mindfulness", "Evening relaxation")))
-          .dailyReflections(new ArrayList<>(Arrays.asList(
+  private static List<MentalHealthChallenge> list = Arrays.asList(
+      new MentalHealthChallenge().setTChallengeType(MentalHealthChallengeType.getById(1))
+          .setUser("user")
+          .setDailyReflections(new ArrayList<>(Arrays.asList(
+              new DailyReflection(1, "Feeling grateful", "Good", LocalDateTime.now().minusDays(1)),
+              new DailyReflection(1, "Reflecting on positive moments", "Great",
+                  LocalDateTime.now())))),
+
+      new MentalHealthChallenge().setTChallengeType(MentalHealthChallengeType.getById(2))
+          .setUser("user")
+          .setDailyReflections(new ArrayList<>(Arrays.asList(
               new DailyReflection(2, "Feeling calm", "Good", LocalDateTime.now().minusDays(1)),
               new DailyReflection(2, "Reflecting on positive moments", "Great",
-                  LocalDateTime.now()))))
-          .build(),
-      new Builder().id(3).title("Self-Compassion Practice").description(
-          "Learn to treat yourself with kindness and understanding through daily self-compassion exercises.")
-          .creator("Dr. Sarah Johnson").totalDays(14)
-          .activities(new ArrayList<>(Arrays.asList("Daily affirmations",
-              "Self-compassion meditation", "Journaling self-kindness")))
-          .dailyReflections(new ArrayList<>(Arrays.asList(
+                  LocalDateTime.now())))),
+
+      new MentalHealthChallenge().setTChallengeType(MentalHealthChallengeType.getById(3))
+          .setUser("user")
+          .setDailyReflections(new ArrayList<>(Arrays.asList(
               new DailyReflection(3, "Feeling grateful", "Good", LocalDateTime.now().minusDays(1)),
               new DailyReflection(3, "Reflecting on positive moments", "Great",
-                  LocalDateTime.now()))))
-          .build(),
-      new Builder().id(4).title("Stress Management Workshop")
-          .description(
-              "Learn effective techniques to manage stress and improve your mental resilience.")
-          .creator("Dr. Emily Carter").totalDays(10)
-          .activities(new ArrayList<>(Arrays.asList("Identify stress triggers",
-              "Practice stress-relief techniques", "Develop a stress management plan")))
-          .dailyReflections(new ArrayList<>(Arrays.asList(
+                  LocalDateTime.now())))),
+
+      new MentalHealthChallenge().setTChallengeType(MentalHealthChallengeType.getById(4))
+          .setUser("user")
+          .setDailyReflections(new ArrayList<>(Arrays.asList(
               new DailyReflection(4, "Feeling calm", "Good", LocalDateTime.now().minusDays(1)),
               new DailyReflection(4, "Reflecting on positive moments", "Great",
-                  LocalDateTime.now()))))
-          .build());
+                  LocalDateTime.now())))));
 
-  private MentalHealthChallenge(Builder builder) {
-    this.id = builder.id;
-    this.title = builder.title;
-    this.description = builder.description;
-    this.creator = builder.creator;
-    this.totalDays = builder.totalDays;
-    this.activities = builder.activities;
-    this.dailyReflections = builder.dailyReflections;
+
+  public MentalHealthChallenge() {
+
   }
 
-  public static class Builder {
-    private int id;
-    private String title;
-    private String description;
-    private String creator;
-    private int totalDays;
-    private ArrayList<String> activities;
-    private ArrayList<DailyReflection> dailyReflections = new ArrayList<>();
-
-    public Builder id(int id) {
-      this.id = id;
-      return this;
-    }
-
-    public Builder title(String title) {
-      this.title = title;
-      return this;
-    }
-
-    public Builder description(String description) {
-      this.description = description;
-      return this;
-    }
-
-    public Builder creator(String creator) {
-      this.creator = creator;
-      return this;
-    }
-
-    public Builder totalDays(int totalDays) {
-      this.totalDays = totalDays;
-      return this;
-    }
-
-    public Builder activities(ArrayList<String> activities) {
-      this.activities = activities;
-      return this;
-    }
-
-    public Builder dailyReflections(ArrayList<DailyReflection> dailyReflections) {
-      this.dailyReflections = dailyReflections;
-      return this;
-    }
-
-    public MentalHealthChallenge build() {
-      return new MentalHealthChallenge(this);
-    }
+  /* Setter Method */
+  public MentalHealthChallenge setTChallengeType(MentalHealthChallengeType tChallengeType) {
+    this.tChallengeType = tChallengeType;
+    return this; // Returns the current object for chaining
   }
 
-  public void addDailyReflection(DailyReflection reflection) {
-    this.dailyReflections.add(reflection);
+  // (The setUser method you provided):
+  public MentalHealthChallenge setUser(String user) {
+    this.user = user;
+    return this; // Returns the current object for chaining
   }
 
-  public static List<MentalHealthChallenge> getAll() {
-    return list;
+  public MentalHealthChallenge setDailyReflections(ArrayList<DailyReflection> dailyReflections) {
+    this.dailyReflections = dailyReflections;
+    return this; // Returns the current object for chaining
   }
 
-  // Getters
+  /* Getter Method */
   public int getId() {
-    return id;
+    return this.tChallengeType.getId();
   }
 
   public String getTitle() {
-    return title;
+    return this.tChallengeType.getTitle();
   }
 
   public String getDescription() {
-    return description;
+    return this.tChallengeType.getDescription();
   }
 
   public String getCreator() {
-    return creator;
+    return this.tChallengeType.getCreator();
   }
 
   public int getTotalDays() {
-    return totalDays;
+    return this.tChallengeType.getTotalDays();
   }
 
   public ArrayList<String> getActivities() {
-    return activities;
+    return this.tChallengeType.getActivities();
   }
 
   public ArrayList<DailyReflection> getDailyReflections() {
     return dailyReflections;
   }
 
+  public String getUser() {
+    return user;
+  }
+
+  public void addDailyReflection(DailyReflection reflection) {
+    this.dailyReflections.add(reflection);
+  }
+
   public int getProgressDays() {
     return this.dailyReflections.size();
   }
 
-  public static MentalHealthChallenge getChallengeById(int id) {
-    return getAll().stream().filter(c -> c.getId() == id).findFirst().orElse(null);
+  public double getAverageMood() {
+    double totalMood = 0;
+    for (DailyReflection reflection : this.getDailyReflections()) {
+      totalMood += reflection.getFeeling().getFeelingValue();
+    }
+    return totalMood / this.getDailyReflections().size();
+  }
+
+  public int getCurrentStreak() {
+    if (this.getDailyReflections().size() == 0) {
+      return 0;
+    }
+
+    int currentStreak = 1;
+    LocalDate previousReflectionDate = null;
+
+    for (DailyReflection dailyReflection : this.getDailyReflections()) {
+      LocalDate currentReflectionDate = dailyReflection.getLocalDate().toLocalDate();
+
+      if (previousReflectionDate == null) {
+        previousReflectionDate = currentReflectionDate;
+        continue;
+      }
+
+      LocalDate expectedReflectionDate = previousReflectionDate.plusDays(1);
+      previousReflectionDate = currentReflectionDate;
+
+      boolean isStreak = currentReflectionDate.isEqual(expectedReflectionDate);
+
+      if (isStreak) {
+        currentStreak++;
+        continue;
+      }
+
+      currentStreak = 0;
+    }
+
+    return currentStreak;
+  }
+
+  /* Static Method */
+  public static List<MentalHealthChallenge> getAll() {
+    return list;
+  }
+
   }
 }

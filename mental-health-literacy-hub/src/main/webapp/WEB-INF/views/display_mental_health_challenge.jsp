@@ -8,10 +8,12 @@
   </head>
 
   <body>
-    <div class="container">
+    <div class="container py-5">
       <section>
-        <h2 class="text-secondary">Available Challenges</h2>
-        <p>Choose a challenge to start your mental wellness journey</p>
+        <div class="py-2">
+          <h2 class="text-secondary">Available Challenges</h2>
+          <p>Choose a challenge to start your mental wellness journey</p>
+        </div>
 
         <c:forEach var="rowIter" begin="1" end="${challenges.size() / 2 + challenges.size() % 2}">
           <div class="row my-2">

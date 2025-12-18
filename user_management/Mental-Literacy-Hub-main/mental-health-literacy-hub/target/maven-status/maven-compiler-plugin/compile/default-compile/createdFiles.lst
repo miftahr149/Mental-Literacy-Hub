@@ -1,0 +1,8 @@
+my\utm\mentalhealthapp\model\DailyReflection.class
+my\utm\mentalhealthapp\model\Feeling.class
+my\utm\mentalhealthapp\controller\UserManagementController.class
+my\utm\mentalhealthapp\controller\AuthController.class
+my\utm\mentalhealthapp\controller\MentalHealthChallengeController.class
+my\utm\mentalhealthapp\model\MentalHealthChallenge.class
+my\utm\mentalhealthapp\model\User.class
+my\utm\mentalhealthapp\model\MentalHealthChallengeType.class

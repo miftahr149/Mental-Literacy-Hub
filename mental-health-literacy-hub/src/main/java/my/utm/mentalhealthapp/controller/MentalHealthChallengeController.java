@@ -8,6 +8,8 @@ import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.LinkedHashSet;
 import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 import javax.servlet.http.HttpSession;
 
 // Import DAOs
@@ -139,6 +141,7 @@ public class MentalHealthChallengeController {
             @RequestParam int totalDays, @RequestParam Set<String> activities,
             HttpSession session) {
 
+        List<String> users = new ArrayList<String>(Arrays.asList("user"));
         String userRole = (String) session.getAttribute("userRole");
         if (!"mhp".equals(userRole))
             return "redirect:/mental-health-challenge/";
@@ -150,6 +153,12 @@ public class MentalHealthChallengeController {
 
         // Refactored: Save to DB via DAO
         typeDAO.saveOrUpdate(challengeType);
+
+        // Create Mental Health Challenge for each user
+        for (String user : users) {
+            this.challengeDAO.saveOrUpdate(
+                    new MentalHealthChallenge().setTChallengeType(challengeType).setUser(user));
+        }
         return "redirect:/mental-health-challenge/";
     }
 

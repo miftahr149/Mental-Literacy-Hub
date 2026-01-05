@@ -1,216 +1,199 @@
 package my.utm.mentalhealthapp.controller;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import java.time.LocalDateTime;
-import java.time.LocalTime;
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Date;
-import java.util.List;
+import java.util.LinkedHashSet;
+import java.util.Set;
 import javax.servlet.http.HttpSession;
-import my.utm.mentalhealthapp.model.DailyReflection;
+
+// Import DAOs
+import my.utm.mentalhealthapp.dao.DailyReflectionDAO;
+import my.utm.mentalhealthapp.dao.MentalHealthChallengeDAO;
+import my.utm.mentalhealthapp.dao.MentalHealthChallengeTypeDAO;
+
+// Import Entities
+import my.utm.mentalhealthapp.entity.DailyReflection;
+import my.utm.mentalhealthapp.entity.MentalHealthChallenge;
+import my.utm.mentalhealthapp.entity.MentalHealthChallengeType;
 import my.utm.mentalhealthapp.model.Feeling;
-import my.utm.mentalhealthapp.model.MentalHealthChallenge;
-import my.utm.mentalhealthapp.model.MentalHealthChallengeType;
 
 @Controller
 @RequestMapping("/mental-health-challenge")
 public class MentalHealthChallengeController {
 
-  private String getUserFromSession(HttpSession session) {
-    String user = (String) session.getAttribute("username");
-    return user;
-  }
+    // Inject the DAOs
+    @Autowired
+    private DailyReflectionDAO reflectionDAO;
 
-  private ModelAndView setStudentHome(HttpSession session) {
-    ModelAndView modelAndView = new ModelAndView("display_mental_health_challenge");
+    @Autowired
+    private MentalHealthChallengeDAO challengeDAO;
 
-    String user = this.getUserFromSession(session);
-    modelAndView.addObject("challenges", MentalHealthChallenge.getByUser(user));
+    @Autowired
+    private MentalHealthChallengeTypeDAO typeDAO;
 
-    return modelAndView;
-  }
-
-  private ModelAndView setMHPHome(HttpSession session) {
-    ModelAndView modelAndView = new ModelAndView("manage_mental_health_challenge");
-
-    String user = this.getUserFromSession(session);
-    modelAndView.addObject("challengeTypes", MentalHealthChallengeType.getByCreator(user));
-
-    return modelAndView;
-  }
-
-
-  @GetMapping("/")
-  public ModelAndView home(HttpSession session) {
-    String userRole = (String) session.getAttribute("userRole");
-
-    if (userRole == null) {
-      return new ModelAndView("redirect:/mental-health-challenge/demo");
+    private String getUserFromSession(HttpSession session) {
+        return (String) session.getAttribute("username");
     }
 
-    boolean isStudent = userRole.equals("student");
-    ModelAndView modelAndView = isStudent ? this.setStudentHome(session) : this.setMHPHome(session);
-    return modelAndView;
-  }
+    private ModelAndView setStudentHome(HttpSession session) {
+        ModelAndView modelAndView = new ModelAndView("display_mental_health_challenge");
+        String user = this.getUserFromSession(session);
 
-  @GetMapping("/demo")
-  public ModelAndView demo() {
-    ModelAndView modelAndView = new ModelAndView("demo_choose_role");
-    return modelAndView;
-  }
-
-  @PostMapping("/demo")
-  public String handleDemoRoleSelection(@RequestParam(name = "role", required = true) String role,
-      HttpSession session) {
-    session.setAttribute("userRole", role);
-
-    String username = role.equals("student") ? "user" : "Dr. Sarah Johnson";
-    session.setAttribute("username", username);
-
-    return "redirect:/mental-health-challenge/";
-  }
-
-  @GetMapping("/challenge/{id}")
-  public ModelAndView challengeDetails(@PathVariable("id") int id, HttpSession session) {
-    String user = this.getUserFromSession(session);
-    MentalHealthChallenge challenge = MentalHealthChallenge.getUserChallengeById(user, id);
-
-    ModelAndView modelAndView = new ModelAndView("challenge_details");
-
-    List<Feeling> feelings = Arrays.asList(Feeling.values());
-    modelAndView.addObject("feelings", feelings);
-    modelAndView.addObject("mode", "overview");
-
-
-    if (challenge != null) {
-      modelAndView.addObject("challenge", challenge);
-    } else {
-      modelAndView.setViewName("redirect:/mental-health-challenge/");
-    }
-    return modelAndView;
-  }
-
-  @GetMapping("/challenge/{id}/manage")
-  public ModelAndView manageChallengeDetails(@PathVariable("id") int id, HttpSession session) {
-    ModelAndView errorView = new ModelAndView("redirect:/mental-health-challenge/");
-
-    String userRole = (String) session.getAttribute("userRole");
-    if (!userRole.equals("mhp")) {
-      return errorView;
+        // Refactored: Use DAO to get challenges from DB
+        modelAndView.addObject("challenges", challengeDAO.getByUser(user));
+        return modelAndView;
     }
 
-    String username = this.getUserFromSession(session);
-    MentalHealthChallengeType challengeType = MentalHealthChallengeType.getById(id);
-    if (!challengeType.getCreator().equals(username)) {
-      return errorView;
+    private ModelAndView setMHPHome(HttpSession session) {
+        ModelAndView modelAndView = new ModelAndView("manage_mental_health_challenge");
+        String user = this.getUserFromSession(session);
+
+        // Refactored: Use DAO to get challenge types by creator
+        modelAndView.addObject("challengeTypes", typeDAO.getByCreator(user));
+        return modelAndView;
     }
 
-    ModelAndView modelAndView = new ModelAndView("manage_challenge_details");
-    modelAndView.addObject("challengeType", challengeType);
-    return modelAndView;
-  }
-
-  @PostMapping("/challenge/{id}/delete")
-  public String deleteChallenge(@PathVariable("id") int id, HttpSession session) {
-    String returnView = "redirect:/mental-health-challenge/";
-
-    String userRole = (String) session.getAttribute("userRole");
-    if (!userRole.equals("mhp")) {
-      return returnView;
+    @GetMapping("/")
+    public ModelAndView home(HttpSession session) {
+        String userRole = (String) session.getAttribute("userRole");
+        if (userRole == null) {
+            return new ModelAndView("redirect:/mental-health-challenge/demo");
+        }
+        return userRole.equals("student") ? this.setStudentHome(session) : this.setMHPHome(session);
     }
 
-    String username = this.getUserFromSession(session);
-    MentalHealthChallengeType challengeType = MentalHealthChallengeType.getById(id);
-    if (!challengeType.getCreator().equals(username)) {
-      return returnView;
+    @GetMapping("/challenge/{id}")
+    public ModelAndView challengeDetails(@PathVariable("id") int id, HttpSession session) {
+        // Refactored: Fetch specific challenge from DB
+        MentalHealthChallenge challenge = challengeDAO.getById(id);
+
+        ModelAndView modelAndView = new ModelAndView("challenge_details");
+        modelAndView.addObject("feelings", Arrays.asList(Feeling.values()));
+        modelAndView.addObject("mode", "overview");
+
+        // Verify ownership
+        if (challenge != null && challenge.getUser().equals(getUserFromSession(session))) {
+            modelAndView.addObject("challenge", challenge);
+        } else {
+            modelAndView.setViewName("redirect:/mental-health-challenge/");
+        }
+        return modelAndView;
     }
 
-    MentalHealthChallenge.removeById(id);
-    MentalHealthChallengeType.removeById(id);
+    @GetMapping("/challenge/{id}/progress")
+    public ModelAndView challengeProgress(@PathVariable("id") int id, HttpSession session) {
+        // Refactored: Fetch specific challenge from DB
+        MentalHealthChallenge challenge = challengeDAO.getById(id);
 
-    return returnView;
-  }
+        ModelAndView modelAndView = new ModelAndView("challenge_progress");
+        modelAndView.addObject("mode", "progress");
 
-
-  @PostMapping("/challenge/{id}/submit")
-  public ModelAndView submitDailyReflection(@ModelAttribute DailyReflection reflection,
-      @PathVariable int id, HttpSession session) {
-
-    String user = this.getUserFromSession(session);
-
-    reflection.setMentalHealthChallengeID(id);
-    reflection.setDate(LocalDateTime.now());
-    MentalHealthChallenge challenge = MentalHealthChallenge.getUserChallengeById(user, id);
-    challenge.addDailyReflection(reflection);
-
-    String viewName = String.format("redirect:/mental-health-challenge/challenge/%d", id);
-    ModelAndView modelAndView = new ModelAndView(viewName);
-    return modelAndView;
-  }
-
-  @GetMapping("/challenge/{id}/progress")
-  public ModelAndView challengeProgress(@PathVariable int id, HttpSession session) {
-    String user = this.getUserFromSession(session);
-    MentalHealthChallenge challenge = MentalHealthChallenge.getUserChallengeById(user, id);
-
-    ModelAndView modelAndView = new ModelAndView("challenge_progress");
-
-    List<Feeling> feelings = Arrays.asList(Feeling.values());
-    modelAndView.addObject("mode", "progress");
-
-
-    if (challenge != null) {
-      modelAndView.addObject("challenge", challenge);
-    } else {
-      modelAndView.setViewName("redirect:/mental-health-challenge/");
-    }
-    return modelAndView;
-  }
-
-  @PostMapping("/create")
-  public String createChallenge(@RequestParam String title, @RequestParam String description,
-      @RequestParam int totalDays, @RequestParam List<String> activities, HttpSession session) {
-
-    String returnView = "redirect:/mental-health-challenge/";
-    String userRole = (String) session.getAttribute("userRole");
-
-    if (!userRole.equals("mhp")) {
-      return returnView;
+        // Verify ownership
+        if (challenge != null && challenge.getUser().equals(getUserFromSession(session))) {
+            modelAndView.addObject("challenge", challenge);
+        } else {
+            modelAndView.setViewName("redirect:/mental-health-challenge/");
+        }
+        return modelAndView;
     }
 
-    String user = getUserFromSession(session);
-    MentalHealthChallengeType challengeType =
-        new MentalHealthChallengeType().setTitle(title).setDescription(description)
-            .setTotalDays(totalDays).setActivities(new ArrayList<>(activities)).setCreator(user);
+    @PostMapping("/challenge/{id}/submit")
+    public String submitDailyReflection(@RequestParam String reflection,
+            @RequestParam String feeling, @PathVariable int id, HttpSession session) {
 
-    MentalHealthChallengeType.add(challengeType);
-    return returnView;
-  }
+        MentalHealthChallenge challenge = challengeDAO.getById(id);
+        if (challenge != null) {
+            DailyReflection newReflection = new DailyReflection().setDate(LocalDateTime.now())
+                    .setFeeling(feeling).setReflection(reflection);
 
-  @PostMapping("/challenge/{id}/update")
-  public String createChallenge(@RequestParam String title, @RequestParam String description,
-      @RequestParam int totalDays, @RequestParam List<String> activities, @PathVariable int id,
-      HttpSession session) {
+            // Use helper method in entity to set the bidirectional link
+            challenge.addDailyReflection(newReflection);
+            this.challengeDAO.update(challenge);
+        }
 
-    String returnView = String.format("redirect:/mental-health-challenge/challenge/%d/", id);
-    String userRole = (String) session.getAttribute("userRole");
-
-    if (!userRole.equals("mhp")) {
-      return returnView;
+        return "redirect:/mental-health-challenge/challenge/" + id;
     }
 
-    MentalHealthChallengeType existingChallengeType = MentalHealthChallengeType.getById(id);
-    existingChallengeType.setTitle(title).setDescription(description).setTotalDays(totalDays)
-        .setActivities(new ArrayList<>(activities));
+    @GetMapping("/challenge/{id}/manage")
+    public ModelAndView manageDetailChallenge(@PathVariable("id") int id, HttpSession session) {
+        // Refactored: Fetch specific challenge from DB
+        MentalHealthChallengeType challengeType = typeDAO.getById(id);
+        ModelAndView modelAndView = new ModelAndView("manage_challenge_details");
 
-    return returnView;
-  }
+        // Verify ownership
+        if (challengeType != null
+                && challengeType.getCreator().equals(getUserFromSession(session))) {
+            modelAndView.addObject("challengeType", challengeType);
+        } else {
+            modelAndView.setViewName("redirect:/mental-health-challenge/");
+        }
+        return modelAndView;
+    }
+
+    @PostMapping("/create")
+    public String createChallenge(@RequestParam String title, @RequestParam String description,
+            @RequestParam int totalDays, @RequestParam Set<String> activities,
+            HttpSession session) {
+
+        String userRole = (String) session.getAttribute("userRole");
+        if (!"mhp".equals(userRole))
+            return "redirect:/mental-health-challenge/";
+
+        MentalHealthChallengeType challengeType =
+                new MentalHealthChallengeType().setTitle(title).setDescription(description)
+                        .setTotalDays(totalDays).setActivities(new LinkedHashSet(activities))
+                        .setCreator(getUserFromSession(session));
+
+        // Refactored: Save to DB via DAO
+        typeDAO.saveOrUpdate(challengeType);
+        return "redirect:/mental-health-challenge/";
+    }
+
+    @PostMapping("/challenge/{id}/delete")
+    public String deleteChallenge(@PathVariable("id") int id, HttpSession session) {
+        String userRole = (String) session.getAttribute("userRole");
+        if ("mhp".equals(userRole)) {
+            // Refactored: Use DAO for deletion
+            typeDAO.delete(id);
+        }
+        return "redirect:/mental-health-challenge/";
+    }
+
+    @PostMapping("/challenge/{id}/update")
+    public String updateChallenge(@RequestParam String title, @RequestParam String description,
+            @RequestParam int totalDays, @RequestParam Set<String> activities, @PathVariable int id,
+            HttpSession session) {
+
+        if (!"mhp".equals(session.getAttribute("userRole"))) {
+            return "redirect:/mental-health-challenge/";
+        }
+
+        // Refactored: Get from DB, update, and save
+        MentalHealthChallengeType existingType = typeDAO.getById(id);
+        if (existingType != null) {
+            existingType.setTitle(title).setDescription(description).setTotalDays(totalDays)
+                    .setActivities(new LinkedHashSet<String>(activities));
+            typeDAO.saveOrUpdate(existingType);
+        }
+
+        return "redirect:/mental-health-challenge/";
+    }
+
+    // Demo mappings remain similar as they mostly handle session
+    @GetMapping("/demo")
+    public ModelAndView demo() {
+        return new ModelAndView("demo_choose_role");
+    }
+
+    @PostMapping("/demo")
+    public String handleDemoRoleSelection(@RequestParam String role, HttpSession session) {
+        session.setAttribute("userRole", role);
+        String username = role.equals("student") ? "user" : "Dr. Sarah Johnson";
+        session.setAttribute("username", username);
+        return "redirect:/mental-health-challenge/";
+    }
 }

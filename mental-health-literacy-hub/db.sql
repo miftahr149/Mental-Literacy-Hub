@@ -36,6 +36,7 @@ CREATE TABLE daily_reflections (
     feeling VARCHAR(50) NOT NULL, -- Enum stored as STRING
     date_created DATETIME NOT NULL,
     challenge_id INT,
+    reflection_index INT,
     PRIMARY KEY (id),
     CONSTRAINT fk_challenge_reflection FOREIGN KEY (challenge_id) 
         REFERENCES mental_health_challenges(id) ON DELETE CASCADE

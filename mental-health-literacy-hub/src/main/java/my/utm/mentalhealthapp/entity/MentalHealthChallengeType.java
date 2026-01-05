@@ -33,6 +33,9 @@ public class MentalHealthChallengeType {
     @Column(name = "activity_name")
     private Set<String> activities = new LinkedHashSet<String>();
 
+    @OneToMany(mappedBy = "tChallengeType", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<MentalHealthChallenge> activeChallenges = new ArrayList<>();
+
     // Default Constructor required by Hibernate
     public MentalHealthChallengeType() {}
 

@@ -13,7 +13,6 @@
     <context:component-scan
         base-package="config, my.utm.mentalhealthapp.service, my.utm.mentalhealthapp.entity, my.utm.mentalhealthapp.dao"></context:component-scan>
 
-    <bean id="testTableDAO" class="my.utm.mentalhealthapp.entity.TestTableDAO" />
     <bean id="reflectionDAO" class="my.utm.mentalhealthapp.dao.DailyReflectionDAO" />
     <bean id="challengeDAO" class="my.utm.mentalhealthapp.dao.MentalHealthChallengeDAO" />
     <bean id="typeDAO" class="my.utm.mentalhealthapp.dao.MentalHealthChallengeTypeDAO" />

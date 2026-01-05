@@ -4,6 +4,8 @@ import javax.persistence.*;
 import my.utm.mentalhealthapp.entity.MentalHealthChallengeType;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Set;
+import java.util.LinkedHashSet;
 import java.util.List;
 
 @Entity
@@ -86,8 +88,12 @@ public class MentalHealthChallenge {
         return this.tChallengeType.getTotalDays();
     }
 
-    public List<String> getActivities() {
+    public Set<String> getActivities() {
         return this.tChallengeType.getActivities();
+    }
+
+    public List<String> getActivitiesAsList() {
+        return new ArrayList<>(this.getActivities());
     }
 
     /* --- Helper Methods for Business Logic --- */

@@ -2,7 +2,9 @@ package my.utm.mentalhealthapp.entity;
 
 import javax.persistence.*;
 import java.util.ArrayList;
+import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "challenge_types")
@@ -29,7 +31,7 @@ public class MentalHealthChallengeType {
     @CollectionTable(name = "challenge_activities",
             joinColumns = @JoinColumn(name = "challenge_type_id"))
     @Column(name = "activity_name")
-    private List<String> activities = new ArrayList<>();
+    private Set<String> activities = new LinkedHashSet<String>();
 
     // Default Constructor required by Hibernate
     public MentalHealthChallengeType() {}
@@ -61,7 +63,7 @@ public class MentalHealthChallengeType {
         return this;
     }
 
-    public MentalHealthChallengeType setActivities(List<String> activities) {
+    public MentalHealthChallengeType setActivities(Set<String> activities) {
         this.activities = activities;
         return this;
     }
@@ -88,7 +90,11 @@ public class MentalHealthChallengeType {
         return totalDays;
     }
 
-    public List<String> getActivities() {
+    public Set<String> getActivities() {
         return activities;
+    }
+
+    public List<String> getActivitiesAsList() {
+        return new ArrayList<>(this.getActivities());
     }
 }

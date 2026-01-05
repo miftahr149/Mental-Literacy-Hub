@@ -27,6 +27,11 @@ public class MentalHealthChallengeDAO {
         getSession().saveOrUpdate(challenge);
     }
 
+    public void update(MentalHealthChallenge challenge) {
+        // Use merge to handle the "NonUniqueObjectException"
+        getSession().merge(challenge);
+    }
+
     public MentalHealthChallenge getById(int id) {
         return getSession().get(MentalHealthChallenge.class, id);
     }

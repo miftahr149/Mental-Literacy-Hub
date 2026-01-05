@@ -10,7 +10,7 @@ public class DailyReflection {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id; // Added a primary key for the table
+    private Integer id = null; // Added a primary key for the table
 
     @Column(name = "reflection", length = 1000)
     private String reflection;
@@ -64,8 +64,8 @@ public class DailyReflection {
         return this;
     }
 
-    public DailyReflection setFeeling(Feeling feeling) {
-        this.feeling = feeling;
+    public DailyReflection setFeeling(String feeling) {
+        this.feeling = Feeling.valueOf(feeling);
         return this;
     }
 
@@ -77,5 +77,12 @@ public class DailyReflection {
     public DailyReflection setChallenge(MentalHealthChallenge challenge) {
         this.challenge = challenge;
         return this;
+    }
+
+    // --- utility ---
+    @Override
+    public String toString() {
+        return String.format("Reflection %s@%s", this.getReflection(),
+                this.getChallenge().getTitle());
     }
 }

@@ -13,7 +13,7 @@
       <section class="card p-4 mb-4">
         <h3 class="card-title">Activities</h3>
         <ul>
-            <c:forEach var="activity" items="${challenge.activities}">
+            <c:forEach var="activity" items="${challenge.activitiesAsList}">
                 <li class="card-text">${activity}</li>
             </c:forEach>
         </ul>

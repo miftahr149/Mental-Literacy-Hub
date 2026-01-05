@@ -104,14 +104,14 @@
                     name="activities"
                     class="form-control"
                     placeholder="Activity 1"
-                    value="${challengeType.activities[0]}"
+                    value="${challengeType.activitiesAsList[0]}"
                     required
                   />
                 </div>
 
                 <c:forEach var="index" begin="1" end="${challengeType.activities.size() - 1}">
                   <div class="input-group mb-2">
-                    <input type="text" name="activities" class="form-control" placeholder="Activity" value="${challengeType.activities[index]}" required />
+                    <input type="text" name="activities" class="form-control" placeholder="Activity" value="${challengeType.activitiesAsList[index]}" required />
                     <button class="btn btn-outline-danger" type="button" onclick="this.parentElement.remove()">
                         <i class="bi bi-trash"></i>
                     </button>

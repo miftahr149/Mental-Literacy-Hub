@@ -8,7 +8,10 @@ import java.util.Set;
 import java.util.LinkedHashSet;
 import java.util.List;
 
+import my.utm.mentalhealthapp.listener.*;
+
 @Entity
+@EntityListeners(MentalHealthChallengeListener.class)
 @Table(name = "mental_health_challenges")
 public class MentalHealthChallenge {
 
@@ -70,6 +73,10 @@ public class MentalHealthChallenge {
 
     public List<DailyReflection> getDailyReflections() {
         return dailyReflections;
+    }
+
+    public int getTypeId() {
+        return this.tChallengeType.getId();
     }
 
     public String getTitle() {

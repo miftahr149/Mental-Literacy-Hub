@@ -11,7 +11,7 @@
     <!-- Component Scan -->
     <context:component-scan base-package="my.utm.mentalhealthapp.controller"></context:component-scan>
     <context:component-scan
-        base-package="config, my.utm.mentalhealthapp.service, my.utm.mentalhealthapp.entity, my.utm.mentalhealthapp.dao"></context:component-scan>
+        base-package="config, my.utm.mentalhealthapp.service, my.utm.mentalhealthapp.entity, my.utm.mentalhealthapp.dao, my.utm.mentalhealthapp.util"></context:component-scan>
 
     <bean id="reflectionDAO" class="my.utm.mentalhealthapp.dao.DailyReflectionDAO" />
     <bean id="challengeDAO" class="my.utm.mentalhealthapp.dao.MentalHealthChallengeDAO" />

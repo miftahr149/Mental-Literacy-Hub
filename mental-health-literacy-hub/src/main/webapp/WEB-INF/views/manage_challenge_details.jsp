@@ -2,12 +2,14 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Challenge Details</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
+    <title>Manage Challenge Details - Mental Health Hub</title>
+    <jsp:include page="/component/common_head.jsp"/>
 </head>
-<body>
-    <div class="container">
+<body class="bg-light">
+  <jsp:include page="/component/main_navbar.jsp">
+    <jsp:param name="activePage" value="challenges"/>
+  </jsp:include>
+    <div class="container py-4">
       <%@ include file="/component/mental_health_challenge_header_mhp.jsp" %>
       
       <section class="card p-4 mb-4">
@@ -19,5 +21,6 @@
         </ul>
       </section>
     </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

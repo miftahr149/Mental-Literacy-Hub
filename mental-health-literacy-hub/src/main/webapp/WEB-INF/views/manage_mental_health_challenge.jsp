@@ -2,15 +2,14 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Manage Challenges</title>
-    <link
-      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
-      rel="stylesheet"
-    />
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
+    <title>Manage Challenges - Mental Health Hub</title>
+    <jsp:include page="/component/common_head.jsp"/>
   </head>
   <body class="bg-light">
-    <div class="container py-5">
+    <jsp:include page="/component/main_navbar.jsp">
+      <jsp:param name="activePage" value="challenges"/>
+    </jsp:include>
+    <div class="container py-4">
       <div class="d-flex justify-content-between align-items-start mb-4">
         <div>
           <h2 class="fw-bold">Manage Challenges</h2>

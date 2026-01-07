@@ -2,18 +2,20 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Challenge Details</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
+    <title>Challenge Details - Mental Health Hub</title>
+    <jsp:include page="/component/common_head.jsp"/>
 </head>
-<body>
-    <div class="container">
+<body class="bg-light">
+  <jsp:include page="/component/main_navbar.jsp">
+    <jsp:param name="activePage" value="challenges"/>
+  </jsp:include>
+    <div class="container py-4">
       <%@ include file="/component/mental_health_challenge_header.jsp" %>
       
       <section class="card p-4 mb-4">
         <h3 class="card-title">Activities</h3>
         <ul>
-            <c:forEach var="activity" items="${challenge.activitiesAsList}">
+            <c:forEach var="activity" items="${challenge.activities}">
                 <li class="card-text">${activity}</li>
             </c:forEach>
         </ul>
@@ -73,5 +75,6 @@
         submitBtn.disabled = isReflectionEmpty || isFeelingEmpty;
       });
     </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

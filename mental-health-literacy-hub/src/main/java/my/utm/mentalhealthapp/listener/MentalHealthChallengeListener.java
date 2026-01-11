@@ -1,6 +1,7 @@
 package my.utm.mentalhealthapp.listener;
 
 import javax.persistence.PostPersist;
+import javax.persistence.PreRemove;
 import my.utm.mentalhealthapp.dao.AuditLogDAO;
 import my.utm.mentalhealthapp.entity.AuditLog;
 import my.utm.mentalhealthapp.entity.MentalHealthChallenge;
@@ -11,7 +12,7 @@ public class MentalHealthChallengeListener {
     public void afterSave(MentalHealthChallenge challenge) {
         AuditLogDAO logDAO = BeanUtil.getBean(AuditLogDAO.class);
 
-        AuditLog audit = new AuditLog().setAction("CREATE")
+        AuditLog audit = new AuditLog().setAction("CHALLENGE_CREATE")
                 .setLogMessage(String.format("Create Challenge %s for user %s",
                         challenge.getTitle(), challenge.getUser()))
                 .setPerformedBy(challenge.getCreator()).setTargetEntity("MentalHealthChallenge")

@@ -11,7 +11,7 @@ import java.util.Set;
 import java.util.ArrayList;
 import java.util.List;
 import javax.servlet.http.HttpSession;
-
+import my.utm.mentalhealthapp.dao.AuditLogDAO;
 // Import DAOs
 import my.utm.mentalhealthapp.dao.DailyReflectionDAO;
 import my.utm.mentalhealthapp.dao.MentalHealthChallengeDAO;
@@ -22,6 +22,7 @@ import my.utm.mentalhealthapp.entity.DailyReflection;
 import my.utm.mentalhealthapp.entity.MentalHealthChallenge;
 import my.utm.mentalhealthapp.entity.MentalHealthChallengeType;
 import my.utm.mentalhealthapp.model.Feeling;
+import my.utm.mentalhealthapp.util.BeanUtil;
 
 @Controller
 @RequestMapping("/mental-health-challenge")
@@ -45,17 +46,23 @@ public class MentalHealthChallengeController {
         ModelAndView modelAndView = new ModelAndView("display_mental_health_challenge");
         String user = this.getUserFromSession(session);
 
+        AuditLogDAO auditLogDAO = BeanUtil.getBean(AuditLogDAO.class);
+
         // Refactored: Use DAO to get challenges from DB
         modelAndView.addObject("challenges", challengeDAO.getByUser(user));
+        modelAndView.addObject("log_activity", auditLogDAO.getLogsByUser(user));
+
         return modelAndView;
     }
 
     private ModelAndView setMHPHome(HttpSession session) {
         ModelAndView modelAndView = new ModelAndView("manage_mental_health_challenge");
         String user = this.getUserFromSession(session);
+        AuditLogDAO auditLogDAO = BeanUtil.getBean(AuditLogDAO.class);
 
         // Refactored: Use DAO to get challenge types by creator
         modelAndView.addObject("challengeTypes", typeDAO.getByCreator(user));
+        modelAndView.addObject("mhp_activity", auditLogDAO.getLogsByUser(user));
         return modelAndView;
     }
 

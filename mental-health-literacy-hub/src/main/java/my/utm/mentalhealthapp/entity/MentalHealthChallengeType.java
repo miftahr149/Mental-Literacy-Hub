@@ -1,6 +1,7 @@
 package my.utm.mentalhealthapp.entity;
 
 import javax.persistence.*;
+import my.utm.mentalhealthapp.listener.MentalHealthChallengeTypeListener;
 import java.util.ArrayList;
 import java.util.LinkedHashSet;
 import java.util.List;
@@ -8,6 +9,7 @@ import java.util.Set;
 
 @Entity
 @Table(name = "challenge_types")
+@EntityListeners(MentalHealthChallengeTypeListener.class)
 public class MentalHealthChallengeType {
 
     @Id

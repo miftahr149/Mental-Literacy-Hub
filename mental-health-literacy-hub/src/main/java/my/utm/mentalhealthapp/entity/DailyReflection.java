@@ -1,10 +1,12 @@
 package my.utm.mentalhealthapp.entity;
 
+import my.utm.mentalhealthapp.listener.DailyReflectionListener;
 import my.utm.mentalhealthapp.model.Feeling;
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
+@EntityListeners(DailyReflectionListener.class)
 @Table(name = "daily_reflections")
 public class DailyReflection {
 

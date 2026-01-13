@@ -29,21 +29,21 @@ INSERT INTO mental_health_challenges (user_name, challenge_type_id) VALUES
 
 -- 4. Insert DailyReflections (linked to specific Challenges)
 -- Reflections for Challenge ID 1
-INSERT INTO daily_reflections (reflection, feeling, date_created, challenge_id) VALUES
-('Feeling grateful', 'GOOD', DATE_SUB(NOW(), INTERVAL 1 DAY), 1),
-('Reflecting on positive moments', 'GREAT', NOW(), 1);
+INSERT INTO daily_reflections (reflection, feeling, date_created, challenge_id, reflection_index) VALUES
+('Feeling grateful', 'GOOD', DATE_SUB(NOW(), INTERVAL 1 DAY), 1, 0),
+('Reflecting on positive moments', 'GREAT', NOW(), 1, 1);
 
 -- Reflections for Challenge ID 2
-INSERT INTO daily_reflections (reflection, feeling, date_created, challenge_id) VALUES
-('Feeling calm', 'GOOD', DATE_SUB(NOW(), INTERVAL 1 DAY), 2),
-('Reflecting on positive moments', 'GREAT', NOW(), 2);
+INSERT INTO daily_reflections (reflection, feeling, date_created, challenge_id, reflection_index) VALUES
+('Feeling calm', 'GOOD', DATE_SUB(NOW(), INTERVAL 1 DAY), 2, 0),
+('Reflecting on positive moments', 'GREAT', NOW(), 2, 1);
 
 -- Reflections for Challenge ID 3
-INSERT INTO daily_reflections (reflection, feeling, date_created, challenge_id) VALUES
-('Feeling grateful', 'GOOD', DATE_SUB(NOW(), INTERVAL 1 DAY), 3),
-('Reflecting on positive moments', 'GREAT', NOW(), 3);
+INSERT INTO daily_reflections (reflection, feeling, date_created, challenge_id, reflection_index) VALUES
+('Feeling grateful', 'GOOD', DATE_SUB(NOW(), INTERVAL 1 DAY), 3, 0),
+('Reflecting on positive moments', 'GREAT', NOW(), 3, 1);
 
 -- Reflections for Challenge ID 4
-INSERT INTO daily_reflections (reflection, feeling, date_created, challenge_id) VALUES
-('Feeling calm', 'GOOD', DATE_SUB(NOW(), INTERVAL 1 DAY), 4),
-('Reflecting on positive moments', 'GREAT', NOW(), 4);
+INSERT INTO daily_reflections (reflection, feeling, date_created, challenge_id, reflection_index) VALUES
+('Feeling calm', 'GOOD', DATE_SUB(NOW(), INTERVAL 1 DAY), 4, 0),
+('Reflecting on positive moments', 'GREAT', NOW(), 4, 1);

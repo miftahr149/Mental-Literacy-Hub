@@ -41,3 +41,14 @@ CREATE TABLE daily_reflections (
     CONSTRAINT fk_challenge_reflection FOREIGN KEY (challenge_id) 
         REFERENCES mental_health_challenges(id) ON DELETE CASCADE
 ) ENGINE=InnoDB;
+
+CREATE TABLE `audit_logs` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `action` varchar(255) NOT NULL,
+  `log_message` varchar(500) DEFAULT NULL,
+  `performed_by` varchar(255) DEFAULT NULL,
+  `target_entity` varchar(255) DEFAULT NULL,
+  `target_id` int DEFAULT NULL,
+  `timestamp` datetime(6) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) 

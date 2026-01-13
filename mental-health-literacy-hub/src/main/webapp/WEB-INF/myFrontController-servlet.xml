@@ -17,6 +17,16 @@
     <bean id="challengeDAO" class="my.utm.mentalhealthapp.dao.MentalHealthChallengeDAO" />
     <bean id="typeDAO" class="my.utm.mentalhealthapp.dao.MentalHealthChallengeTypeDAO" />
 
+    <bean id="multipartResolver"
+        class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+        <property name="maxUploadSize" value="5242880" /> <!-- 5MB -->
+        <property name="maxInMemorySize" value="1048576" /> <!-- 1MB -->
+    </bean>
+
+    <mvc:annotation-driven></mvc:annotation-driven>
+
+    <mvc:resources mapping="/uploads/**" location="/uploads/" />
+
     <!-- Finding view  -->
     <bean id="viewResolver"
         class="org.springframework.web.servlet.view.InternalResourceViewResolver">

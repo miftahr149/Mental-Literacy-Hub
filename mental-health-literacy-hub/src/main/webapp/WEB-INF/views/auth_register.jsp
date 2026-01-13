@@ -13,7 +13,7 @@
       <div class="card shadow-sm border-0">
         <div class="card-body p-4">
           <h2 class="fw-bold mb-1 text-center">Create your account</h2>
-          <p class="text-muted mb-4 text-center">Register as a student, mental health professional or admin</p>
+          <p class="text-muted mb-4 text-center">Register as a student or mental health professional</p>
 
           <c:if test="${not empty error}">
             <div class="alert alert-danger" role="alert">
@@ -53,7 +53,6 @@
                 <option value="">Select your role</option>
                 <option value="student" <c:if test="${role == 'student'}">selected</c:if>>Student</option>
                 <option value="mhp" <c:if test="${role == 'mhp'}">selected</c:if>>Mental Health Professional</option>
-                <option value="admin" <c:if test="${role == 'admin'}">selected</c:if>>Admin</option>
               </select>
             </div>
 

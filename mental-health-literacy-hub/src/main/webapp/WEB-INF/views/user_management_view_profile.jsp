@@ -10,32 +10,47 @@
     <jsp:param name="activePage" value="profile"/>
   </jsp:include>
 
-  <div class="container py-5">
+  <div class="container py-5 fade-in">
     <div class="row justify-content-center">
       <div class="col-md-8 col-lg-6">
-        <div class="card shadow-sm border-0">
-          <div class="card-header bg-primary text-white">
-            <h4 class="mb-0"><i class="bi bi-person-circle"></i> My Profile</h4>
+        <div class="card">
+          <div class="card-header">
+            <h4 class="mb-0"><i class="bi bi-person-circle me-2"></i> My Profile</h4>
           </div>
           <div class="card-body p-4">
-            <div class="mb-4 text-center">
-              <i class="bi bi-person-circle" style="font-size: 4rem; color: #6c757d;"></i>
+            <div class="mb-4 text-center fade-in">
+              <c:choose>
+                <c:when test="${user.profilePicture != null && !user.profilePicture.isEmpty()}">
+                  <img src="${pageContext.request.contextPath}/uploads/profile-pictures/${user.profilePicture}" 
+                       alt="Profile Picture" 
+                       class="profile-picture">
+                </c:when>
+                <c:otherwise>
+                  <div class="profile-picture d-inline-flex align-items-center justify-content-center bg-light border-4" style="border-color: #667eea;">
+                    <i class="bi bi-person-circle" style="font-size: 5rem; color: #9ca3af;"></i>
+                  </div>
+                </c:otherwise>
+              </c:choose>
             </div>
 
-            <div class="mb-3">
-              <label class="form-label fw-semibold text-muted">Full Name</label>
-              <div class="form-control-plaintext border-bottom pb-2">${user.name}</div>
+            <div class="mb-4">
+              <label class="form-label">Full Name</label>
+              <div class="card bg-light border-0 p-3">
+                <div class="fw-semibold" style="color: #1f2937; font-size: 1.1rem;">${user.name}</div>
+              </div>
             </div>
 
-            <div class="mb-3">
-              <label class="form-label fw-semibold text-muted">Email</label>
-              <div class="form-control-plaintext border-bottom pb-2">${user.email}</div>
+            <div class="mb-4">
+              <label class="form-label">Email</label>
+              <div class="card bg-light border-0 p-3">
+                <div class="fw-semibold" style="color: #1f2937; font-size: 1.1rem;">${user.email}</div>
+              </div>
             </div>
 
-            <div class="mb-3">
-              <label class="form-label fw-semibold text-muted">Role</label>
-              <div class="form-control-plaintext border-bottom pb-2">
-                <span class="badge bg-info">${user.role}</span>
+            <div class="mb-4">
+              <label class="form-label">Role</label>
+              <div class="card bg-light border-0 p-3">
+                <span class="badge bg-primary" style="font-size: 1rem; padding: 0.5rem 1rem; text-transform: capitalize;">${user.role}</span>
               </div>
             </div>
 

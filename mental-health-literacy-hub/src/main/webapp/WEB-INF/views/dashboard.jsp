@@ -4,37 +4,19 @@
 <head>
   <title>Dashboard - Mental Health Hub</title>
   <jsp:include page="/component/common_head.jsp"/>
-  <style>
-    .stat-card {
-      transition: transform 0.2s;
-    }
-    .stat-card:hover {
-      transform: translateY(-5px);
-    }
-    .quick-action-card {
-      transition: all 0.2s;
-      cursor: pointer;
-    }
-    .quick-action-card:hover {
-      transform: translateY(-3px);
-      box-shadow: 0 4px 8px rgba(0,0,0,0.15) !important;
-    }
-  </style>
 </head>
-<body class="bg-light">
+<body>
   <jsp:include page="/component/main_navbar.jsp">
     <jsp:param name="activePage" value="dashboard"/>
   </jsp:include>
 
-  <div class="container py-4">
+  <div class="container py-4 fade-in">
     <!-- Welcome Section -->
-    <div class="row mb-4">
-      <div class="col-12">
-        <h2 class="fw-bold text-primary">
-          <i class="bi bi-house-heart"></i> Welcome back, ${username}!
-        </h2>
-        <p class="text-muted">Here's an overview of your mental health journey</p>
-      </div>
+    <div class="page-header">
+      <h2>
+        <i class="bi bi-house-heart me-2"></i> Welcome back, ${username}!
+      </h2>
+      <p>Here's an overview of your mental health journey</p>
     </div>
 
     <c:choose>
@@ -44,39 +26,39 @@
         <!-- Stats Cards -->
         <div class="row mb-4">
           <div class="col-md-3 mb-3">
-            <div class="card stat-card shadow-sm border-0 h-100">
-              <div class="card-body text-center">
-                <i class="bi bi-trophy text-warning" style="font-size: 2.5rem;"></i>
-                <h3 class="mt-2 mb-0">${totalChallenges}</h3>
-                <p class="text-muted mb-0">Total Challenges</p>
+            <div class="stat-card">
+              <div class="stat-icon" style="background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);">
+                <i class="bi bi-trophy"></i>
               </div>
+              <div class="stat-value">${totalChallenges}</div>
+              <div class="stat-label">Total Challenges</div>
             </div>
           </div>
           <div class="col-md-3 mb-3">
-            <div class="card stat-card shadow-sm border-0 h-100 bg-primary text-white">
-              <div class="card-body text-center">
-                <i class="bi bi-activity" style="font-size: 2.5rem;"></i>
-                <h3 class="mt-2 mb-0">${activeChallenges}</h3>
-                <p class="mb-0">Active Challenges</p>
+            <div class="stat-card">
+              <div class="stat-icon">
+                <i class="bi bi-activity"></i>
               </div>
+              <div class="stat-value">${activeChallenges}</div>
+              <div class="stat-label">Active Challenges</div>
             </div>
           </div>
           <div class="col-md-3 mb-3">
-            <div class="card stat-card shadow-sm border-0 h-100 bg-success text-white">
-              <div class="card-body text-center">
-                <i class="bi bi-check-circle" style="font-size: 2.5rem;"></i>
-                <h3 class="mt-2 mb-0">${completedChallenges}</h3>
-                <p class="mb-0">Completed</p>
+            <div class="stat-card">
+              <div class="stat-icon" style="background: linear-gradient(135deg, #10b981 0%, #059669 100%);">
+                <i class="bi bi-check-circle"></i>
               </div>
+              <div class="stat-value">${completedChallenges}</div>
+              <div class="stat-label">Completed</div>
             </div>
           </div>
           <div class="col-md-3 mb-3">
-            <div class="card stat-card shadow-sm border-0 h-100 bg-info text-white">
-              <div class="card-body text-center">
-                <i class="bi bi-calendar-check" style="font-size: 2.5rem;"></i>
-                <h3 class="mt-2 mb-0">${totalProgressDays}</h3>
-                <p class="mb-0">Days Progressed</p>
+            <div class="stat-card">
+              <div class="stat-icon" style="background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);">
+                <i class="bi bi-calendar-check"></i>
               </div>
+              <div class="stat-value">${totalProgressDays}</div>
+              <div class="stat-label">Days Progressed</div>
             </div>
           </div>
         </div>
@@ -84,48 +66,56 @@
         <!-- Quick Actions -->
         <div class="row mb-4">
           <div class="col-12">
-            <h4 class="fw-bold mb-3"><i class="bi bi-lightning-charge"></i> Quick Actions</h4>
+            <h4 class="fw-bold mb-4" style="color: #1f2937;"><i class="bi bi-lightning-charge me-2"></i> Quick Actions</h4>
           </div>
           <div class="col-md-4 mb-3">
             <a href="${pageContext.request.contextPath}/mental-health-challenge/" class="text-decoration-none">
-              <div class="card quick-action-card shadow-sm border-0 h-100">
+              <div class="card quick-action-card h-100">
                 <div class="card-body text-center">
-                  <i class="bi bi-list-task text-primary" style="font-size: 3rem;"></i>
-                  <h5 class="mt-3">View Challenges</h5>
-                  <p class="text-muted small">Browse and start new challenges</p>
+                  <div class="mb-3" style="font-size: 3rem; color: #667eea;">
+                    <i class="bi bi-list-task"></i>
+                  </div>
+                  <h5 class="fw-bold" style="color: #1f2937;">View Challenges</h5>
+                  <p class="text-muted small mb-0">Browse and start new challenges</p>
                 </div>
               </div>
             </a>
           </div>
           <div class="col-md-4 mb-3">
             <a href="${pageContext.request.contextPath}/user-management/profile" class="text-decoration-none">
-              <div class="card quick-action-card shadow-sm border-0 h-100">
+              <div class="card quick-action-card h-100">
                 <div class="card-body text-center">
-                  <i class="bi bi-person-circle text-success" style="font-size: 3rem;"></i>
-                  <h5 class="mt-3">My Profile</h5>
-                  <p class="text-muted small">View and edit your profile</p>
+                  <div class="mb-3" style="font-size: 3rem; color: #10b981;">
+                    <i class="bi bi-person-circle"></i>
+                  </div>
+                  <h5 class="fw-bold" style="color: #1f2937;">My Profile</h5>
+                  <p class="text-muted small mb-0">View and edit your profile</p>
                 </div>
               </div>
             </a>
           </div>
           <div class="col-md-4 mb-3">
             <a href="${pageContext.request.contextPath}/user-management/profile/edit" class="text-decoration-none">
-              <div class="card quick-action-card shadow-sm border-0 h-100">
+              <div class="card quick-action-card h-100">
                 <div class="card-body text-center">
-                  <i class="bi bi-pencil-square text-warning" style="font-size: 3rem;"></i>
-                  <h5 class="mt-3">Update Profile</h5>
-                  <p class="text-muted small">Edit your personal information</p>
+                  <div class="mb-3" style="font-size: 3rem; color: #f59e0b;">
+                    <i class="bi bi-pencil-square"></i>
+                  </div>
+                  <h5 class="fw-bold" style="color: #1f2937;">Update Profile</h5>
+                  <p class="text-muted small mb-0">Edit your personal information</p>
                 </div>
               </div>
             </a>
           </div>
           <div class="col-md-4 mb-3">
             <a href="${pageContext.request.contextPath}/analytics/" class="text-decoration-none">
-              <div class="card quick-action-card shadow-sm border-0 h-100">
+              <div class="card quick-action-card h-100">
                 <div class="card-body text-center">
-                  <i class="bi bi-graph-up-arrow text-info" style="font-size: 3rem;"></i>
-                  <h5 class="mt-3">View Analytics</h5>
-                  <p class="text-muted small">Reports and statistics</p>
+                  <div class="mb-3" style="font-size: 3rem; color: #3b82f6;">
+                    <i class="bi bi-graph-up-arrow"></i>
+                  </div>
+                  <h5 class="fw-bold" style="color: #1f2937;">View Analytics</h5>
+                  <p class="text-muted small mb-0">Reports and statistics</p>
                 </div>
               </div>
             </a>
@@ -135,22 +125,22 @@
         <!-- Active Challenges -->
         <div class="row mb-4">
           <div class="col-12">
-            <h4 class="fw-bold mb-3"><i class="bi bi-fire"></i> Active Challenges</h4>
+            <h4 class="fw-bold mb-4" style="color: #1f2937;"><i class="bi bi-fire me-2"></i> Active Challenges</h4>
             <c:choose>
               <c:when test="${not empty challenges && challenges.size() > 0}">
                 <div class="row">
                   <c:forEach var="challenge" items="${challenges}" varStatus="status">
                     <c:if test="${status.index < 3}">
                       <div class="col-md-4 mb-3">
-                        <div class="card shadow-sm border-0 h-100">
+                        <div class="card h-100">
                           <div class="card-body">
-                            <h5 class="card-title">${challenge.title}</h5>
+                            <h5 class="card-title fw-bold" style="color: #1f2937;">${challenge.title}</h5>
                             <p class="card-text text-muted small">${challenge.description}</p>
-                            <div class="mb-2">
+                            <div class="mb-3">
                               <small class="text-muted">Progress: ${challenge.progressDays} / ${challenge.totalDays} days</small>
-                              <div class="progress mt-1" style="height: 6px;">
+                              <div class="progress mt-2" style="height: 8px; border-radius: 10px;">
                                 <div class="progress-bar" role="progressbar" 
-                                     style="width: ${challenge.progressDays * 100 / challenge.totalDays}%;" 
+                                     style="width: ${challenge.progressDays * 100 / challenge.totalDays}%; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);" 
                                      aria-valuenow="${challenge.progressDays}" 
                                      aria-valuemin="0" 
                                      aria-valuemax="${challenge.totalDays}"></div>
@@ -173,18 +163,20 @@
                     </c:if>
                   </c:forEach>
                 </div>
-                <div class="text-center mt-3">
+                <div class="text-center mt-4">
                   <a href="${pageContext.request.contextPath}/mental-health-challenge/" class="btn btn-outline-primary">
                     View All Challenges <i class="bi bi-arrow-right"></i>
                   </a>
                 </div>
               </c:when>
               <c:otherwise>
-                <div class="card shadow-sm border-0">
+                <div class="card">
                   <div class="card-body text-center py-5">
-                    <i class="bi bi-inbox text-muted" style="font-size: 3rem;"></i>
-                    <p class="text-muted mt-3">No challenges yet. Start your first challenge!</p>
-                    <a href="${pageContext.request.contextPath}/mental-health-challenge/" class="btn btn-primary">
+                    <div class="mb-3" style="font-size: 4rem; color: #9ca3af;">
+                      <i class="bi bi-inbox"></i>
+                    </div>
+                    <p class="text-muted" style="font-size: 1.1rem;">No challenges yet. Start your first challenge!</p>
+                    <a href="${pageContext.request.contextPath}/mental-health-challenge/" class="btn btn-primary mt-3">
                       Browse Challenges
                     </a>
                   </div>
@@ -201,21 +193,21 @@
         <!-- Stats Cards -->
         <div class="row mb-4">
           <div class="col-md-6 mb-3">
-            <div class="card stat-card shadow-sm border-0 h-100 bg-primary text-white">
-              <div class="card-body text-center">
-                <i class="bi bi-clipboard-check" style="font-size: 2.5rem;"></i>
-                <h3 class="mt-2 mb-0">${totalChallenges}</h3>
-                <p class="mb-0">Challenges Created</p>
+            <div class="stat-card">
+              <div class="stat-icon">
+                <i class="bi bi-clipboard-check"></i>
               </div>
+              <div class="stat-value">${totalChallenges}</div>
+              <div class="stat-label">Challenges Created</div>
             </div>
           </div>
           <div class="col-md-6 mb-3">
-            <div class="card stat-card shadow-sm border-0 h-100 bg-success text-white">
-              <div class="card-body text-center">
-                <i class="bi bi-people" style="font-size: 2.5rem;"></i>
-                <h3 class="mt-2 mb-0">Active</h3>
-                <p class="mb-0">Challenge Management</p>
+            <div class="stat-card">
+              <div class="stat-icon" style="background: linear-gradient(135deg, #10b981 0%, #059669 100%);">
+                <i class="bi bi-people"></i>
               </div>
+              <div class="stat-value">Active</div>
+              <div class="stat-label">Challenge Management</div>
             </div>
           </div>
         </div>
@@ -223,48 +215,56 @@
         <!-- Quick Actions -->
         <div class="row mb-4">
           <div class="col-12">
-            <h4 class="fw-bold mb-3"><i class="bi bi-lightning-charge"></i> Quick Actions</h4>
+            <h4 class="fw-bold mb-4" style="color: #1f2937;"><i class="bi bi-lightning-charge me-2"></i> Quick Actions</h4>
           </div>
           <div class="col-md-4 mb-3">
             <a href="${pageContext.request.contextPath}/mental-health-challenge/" class="text-decoration-none">
-              <div class="card quick-action-card shadow-sm border-0 h-100">
+              <div class="card quick-action-card h-100">
                 <div class="card-body text-center">
-                  <i class="bi bi-plus-circle text-primary" style="font-size: 3rem;"></i>
-                  <h5 class="mt-3">Manage Challenges</h5>
-                  <p class="text-muted small">Create and manage challenges</p>
+                  <div class="mb-3" style="font-size: 3rem; color: #667eea;">
+                    <i class="bi bi-plus-circle"></i>
+                  </div>
+                  <h5 class="fw-bold" style="color: #1f2937;">Manage Challenges</h5>
+                  <p class="text-muted small mb-0">Create and manage challenges</p>
                 </div>
               </div>
             </a>
           </div>
           <div class="col-md-4 mb-3">
             <a href="${pageContext.request.contextPath}/user-management/profile" class="text-decoration-none">
-              <div class="card quick-action-card shadow-sm border-0 h-100">
+              <div class="card quick-action-card h-100">
                 <div class="card-body text-center">
-                  <i class="bi bi-person-circle text-success" style="font-size: 3rem;"></i>
-                  <h5 class="mt-3">My Profile</h5>
-                  <p class="text-muted small">View and edit your profile</p>
+                  <div class="mb-3" style="font-size: 3rem; color: #10b981;">
+                    <i class="bi bi-person-circle"></i>
+                  </div>
+                  <h5 class="fw-bold" style="color: #1f2937;">My Profile</h5>
+                  <p class="text-muted small mb-0">View and edit your profile</p>
                 </div>
               </div>
             </a>
           </div>
           <div class="col-md-4 mb-3">
             <a href="${pageContext.request.contextPath}/user-management/profile/edit" class="text-decoration-none">
-              <div class="card quick-action-card shadow-sm border-0 h-100">
+              <div class="card quick-action-card h-100">
                 <div class="card-body text-center">
-                  <i class="bi bi-pencil-square text-warning" style="font-size: 3rem;"></i>
-                  <h5 class="mt-3">Update Profile</h5>
-                  <p class="text-muted small">Edit your personal information</p>
+                  <div class="mb-3" style="font-size: 3rem; color: #f59e0b;">
+                    <i class="bi bi-pencil-square"></i>
+                  </div>
+                  <h5 class="fw-bold" style="color: #1f2937;">Update Profile</h5>
+                  <p class="text-muted small mb-0">Edit your personal information</p>
                 </div>
               </div>
             </a>
           </div>
           <div class="col-md-4 mb-3">
             <a href="${pageContext.request.contextPath}/analytics/" class="text-decoration-none">
-              <div class="card quick-action-card shadow-sm border-0 h-100">
+              <div class="card quick-action-card h-100">
                 <div class="card-body text-center">
-                  <i class="bi bi-graph-up-arrow text-info" style="font-size: 3rem;"></i>
-                  <h5 class="mt-3">View Analytics</h5>
-                  <p class="text-muted small">Reports and statistics</p>
+                  <div class="mb-3" style="font-size: 3rem; color: #3b82f6;">
+                    <i class="bi bi-graph-up-arrow"></i>
+                  </div>
+                  <h5 class="fw-bold" style="color: #1f2937;">View Analytics</h5>
+                  <p class="text-muted small mb-0">Reports and statistics</p>
                 </div>
               </div>
             </a>
@@ -275,12 +275,12 @@
         <!-- Admin Dashboard -->
         <div class="row mb-4">
           <div class="col-md-4 mb-3">
-            <div class="card stat-card shadow-sm border-0 h-100 bg-primary text-white">
-              <div class="card-body text-center">
-                <i class="bi bi-people" style="font-size: 2.5rem;"></i>
-                <h3 class="mt-2 mb-0">Admin</h3>
-                <p class="mb-0">User Management</p>
+            <div class="stat-card">
+              <div class="stat-icon">
+                <i class="bi bi-people"></i>
               </div>
+              <div class="stat-value">Admin</div>
+              <div class="stat-label">User Management</div>
             </div>
           </div>
         </div>
@@ -288,48 +288,56 @@
         <!-- Quick Actions -->
         <div class="row mb-4">
           <div class="col-12">
-            <h4 class="fw-bold mb-3"><i class="bi bi-lightning-charge"></i> Quick Actions</h4>
+            <h4 class="fw-bold mb-4" style="color: #1f2937;"><i class="bi bi-lightning-charge me-2"></i> Quick Actions</h4>
           </div>
           <div class="col-md-4 mb-3">
             <a href="${pageContext.request.contextPath}/user-management/admin/users" class="text-decoration-none">
-              <div class="card quick-action-card shadow-sm border-0 h-100">
+              <div class="card quick-action-card h-100">
                 <div class="card-body text-center">
-                  <i class="bi bi-people text-primary" style="font-size: 3rem;"></i>
-                  <h5 class="mt-3">Manage Users</h5>
-                  <p class="text-muted small">View and manage all users</p>
+                  <div class="mb-3" style="font-size: 3rem; color: #667eea;">
+                    <i class="bi bi-people"></i>
+                  </div>
+                  <h5 class="fw-bold" style="color: #1f2937;">Manage Users</h5>
+                  <p class="text-muted small mb-0">View and manage all users</p>
                 </div>
               </div>
             </a>
           </div>
           <div class="col-md-4 mb-3">
             <a href="${pageContext.request.contextPath}/user-management/profile" class="text-decoration-none">
-              <div class="card quick-action-card shadow-sm border-0 h-100">
+              <div class="card quick-action-card h-100">
                 <div class="card-body text-center">
-                  <i class="bi bi-person-circle text-success" style="font-size: 3rem;"></i>
-                  <h5 class="mt-3">My Profile</h5>
-                  <p class="text-muted small">View and edit your profile</p>
+                  <div class="mb-3" style="font-size: 3rem; color: #10b981;">
+                    <i class="bi bi-person-circle"></i>
+                  </div>
+                  <h5 class="fw-bold" style="color: #1f2937;">My Profile</h5>
+                  <p class="text-muted small mb-0">View and edit your profile</p>
                 </div>
               </div>
             </a>
           </div>
           <div class="col-md-4 mb-3">
             <a href="${pageContext.request.contextPath}/user-management/profile/edit" class="text-decoration-none">
-              <div class="card quick-action-card shadow-sm border-0 h-100">
+              <div class="card quick-action-card h-100">
                 <div class="card-body text-center">
-                  <i class="bi bi-pencil-square text-warning" style="font-size: 3rem;"></i>
-                  <h5 class="mt-3">Update Profile</h5>
-                  <p class="text-muted small">Edit your personal information</p>
+                  <div class="mb-3" style="font-size: 3rem; color: #f59e0b;">
+                    <i class="bi bi-pencil-square"></i>
+                  </div>
+                  <h5 class="fw-bold" style="color: #1f2937;">Update Profile</h5>
+                  <p class="text-muted small mb-0">Edit your personal information</p>
                 </div>
               </div>
             </a>
           </div>
           <div class="col-md-4 mb-3">
             <a href="${pageContext.request.contextPath}/analytics/" class="text-decoration-none">
-              <div class="card quick-action-card shadow-sm border-0 h-100">
+              <div class="card quick-action-card h-100">
                 <div class="card-body text-center">
-                  <i class="bi bi-graph-up-arrow text-info" style="font-size: 3rem;"></i>
-                  <h5 class="mt-3">View Analytics</h5>
-                  <p class="text-muted small">Reports and statistics</p>
+                  <div class="mb-3" style="font-size: 3rem; color: #3b82f6;">
+                    <i class="bi bi-graph-up-arrow"></i>
+                  </div>
+                  <h5 class="fw-bold" style="color: #1f2937;">View Analytics</h5>
+                  <p class="text-muted small mb-0">Reports and statistics</p>
                 </div>
               </div>
             </a>
@@ -342,8 +350,3 @@
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
-
-
-
-
-

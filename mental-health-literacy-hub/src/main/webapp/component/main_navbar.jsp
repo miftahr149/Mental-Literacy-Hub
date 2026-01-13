@@ -1,6 +1,6 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!-- Main Navigation Bar for All Pages -->
-<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+<nav class="navbar navbar-expand-lg navbar-light">
   <div class="container">
     <a class="navbar-brand" href="${pageContext.request.contextPath}/dashboard/">
       <i class="bi bi-heart-pulse"></i> Mental Health Hub
@@ -66,6 +66,38 @@
             </c:otherwise>
           </c:choose>
         </li>
+        <c:if test="${sessionScope.userRole == 'student' || sessionScope.userRole == 'mhp'}">
+          <li class="nav-item">
+            <c:choose>
+              <c:when test="${param.activePage == 'feedback'}">
+                <a class="nav-link active" href="${pageContext.request.contextPath}/feedback/file">
+                  <i class="bi bi-chat-left-text"></i> Feedback
+                </a>
+              </c:when>
+              <c:otherwise>
+                <a class="nav-link" href="${pageContext.request.contextPath}/feedback/file">
+                  <i class="bi bi-chat-left-text"></i> Feedback
+                </a>
+              </c:otherwise>
+            </c:choose>
+          </li>
+        </c:if>
+        <c:if test="${sessionScope.userRole == 'mhp'}">
+          <li class="nav-item">
+            <c:choose>
+              <c:when test="${param.activePage == 'feedback'}">
+                <a class="nav-link active" href="${pageContext.request.contextPath}/feedback/view">
+                  <i class="bi bi-eye"></i> View Student Feedback
+                </a>
+              </c:when>
+              <c:otherwise>
+                <a class="nav-link" href="${pageContext.request.contextPath}/feedback/view">
+                  <i class="bi bi-eye"></i> View Student Feedback
+                </a>
+              </c:otherwise>
+            </c:choose>
+          </li>
+        </c:if>
         <c:if test="${sessionScope.userRole == 'admin'}">
           <li class="nav-item">
             <c:choose>
@@ -77,6 +109,20 @@
               <c:otherwise>
                 <a class="nav-link" href="${pageContext.request.contextPath}/user-management/admin/users">
                   <i class="bi bi-people"></i> Manage Users
+                </a>
+              </c:otherwise>
+            </c:choose>
+          </li>
+          <li class="nav-item">
+            <c:choose>
+              <c:when test="${param.activePage == 'feedback'}">
+                <a class="nav-link active" href="${pageContext.request.contextPath}/feedback/admin">
+                  <i class="bi bi-chat-left-text"></i> Manage Feedback
+                </a>
+              </c:when>
+              <c:otherwise>
+                <a class="nav-link" href="${pageContext.request.contextPath}/feedback/admin">
+                  <i class="bi bi-chat-left-text"></i> Manage Feedback
                 </a>
               </c:otherwise>
             </c:choose>

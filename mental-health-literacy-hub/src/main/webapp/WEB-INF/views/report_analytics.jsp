@@ -9,8 +9,12 @@
     />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <jsp:include page="/component/common_head.jsp"/>
   </head>
   <body class="bg-light">
+    <jsp:include page="/component/main_navbar.jsp">
+      <jsp:param name="activePage" value="analytics"/>
+    </jsp:include>
     <div class="container py-5">
       <div class="d-flex justify-content-between align-items-start mb-4">
         <div>

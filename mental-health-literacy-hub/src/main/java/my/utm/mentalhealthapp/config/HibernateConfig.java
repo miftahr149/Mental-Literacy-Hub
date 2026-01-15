@@ -1,4 +1,4 @@
-package config;
+package my.utm.mentalhealthapp.config;
 
 import java.util.Properties;
 import javax.sql.DataSource;

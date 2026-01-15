@@ -25,6 +25,9 @@ public class User {
     @Column(name = "profile_picture")
     private String profilePicture; // Stores the filename of the profile picture
 
+    @Column(name = "enabled", nullable = false)
+    private boolean enabled = true; // User account status (true = active, false = banned)
+
     public User() {}
 
     public User(String name, String email, String password, String role) {
@@ -32,6 +35,7 @@ public class User {
         this.email = email;
         this.password = password;
         this.role = role;
+        this.enabled = true; // Default to enabled
     }
 
     /* Getter Methods */
@@ -87,6 +91,15 @@ public class User {
 
     public User setProfilePicture(String profilePicture) {
         this.profilePicture = profilePicture;
+        return this;
+    }
+
+    public boolean isEnabled() {
+        return enabled;
+    }
+
+    public User setEnabled(boolean enabled) {
+        this.enabled = enabled;
         return this;
     }
 }

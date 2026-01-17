@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import javax.servlet.http.HttpSession;
 import my.utm.mentalhealthapp.entity.User;
+import my.utm.mentalhealthapp.service.MentalHealthChallengeService;
 import my.utm.mentalhealthapp.dao.UserDAO;
 
 @Controller
@@ -17,6 +18,9 @@ public class AuthController {
 
     @Autowired
     private UserDAO userDAO;
+
+    @Autowired
+    private MentalHealthChallengeService challengeService;
 
     @GetMapping("/login")
     public ModelAndView showLogin() {
@@ -179,6 +183,7 @@ public class AuthController {
         // Create new user (trim password to avoid whitespace issues)
         User newUser = new User(name.trim(), email.trim(), password.trim(), role);
         userDAO.saveOrUpdate(newUser);
+        challengeService.generateMentalHealth(newUser);
 
         // Redirect to login page with success message
         ModelAndView loginView = new ModelAndView("auth_login");

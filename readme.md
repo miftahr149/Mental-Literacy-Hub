@@ -13,9 +13,7 @@ This project aims to promote mental well-being and awareness through a digital, 
 - Servlet
 - JSP
 - Maven
-
-**Note:**  
-At this stage, the project uses **dummy data** only. Database integration will be added in a future phase.
+- MySQL
 
 ---
 
@@ -41,6 +39,10 @@ Follow these steps to set up the project locally:
 4. **Deploy to Apache Tomcat**
   - Locate the generated `.war` file in the `target/` folder.
   - Deploy it to your Tomcat server (either viea IDE or Tomcat Manager)
+
+5. **Database Setup**
+  - create database "mentalhealth_db" inside your MySQL server
+  - export file "db.sql" into your database
 
 ---
 

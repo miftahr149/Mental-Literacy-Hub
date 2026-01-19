@@ -75,9 +75,6 @@ public class MentalHealthChallengeController {
     @GetMapping("/")
     public ModelAndView home(HttpSession session) {
         String userRole = (String) session.getAttribute("userRole");
-        if (userRole == null) {
-            return new ModelAndView("redirect:/mental-health-challenge/demo");
-        }
         return userRole.equals("student") ? this.setStudentHome(session) : this.setMHPHome(session);
     }
 
@@ -204,20 +201,6 @@ public class MentalHealthChallengeController {
             typeDAO.saveOrUpdate(existingType);
         }
 
-        return "redirect:/mental-health-challenge/";
-    }
-
-    // Demo mappings remain similar as they mostly handle session
-    @GetMapping("/demo")
-    public ModelAndView demo() {
-        return new ModelAndView("demo_choose_role");
-    }
-
-    @PostMapping("/demo")
-    public String handleDemoRoleSelection(@RequestParam String role, HttpSession session) {
-        session.setAttribute("userRole", role);
-        String username = role.equals("student") ? "user" : "Dr. Sarah Johnson";
-        session.setAttribute("username", username);
         return "redirect:/mental-health-challenge/";
     }
 

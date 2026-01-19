@@ -12,7 +12,8 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 @Configuration
 @EnableTransactionManagement
-@ComponentScan(basePackages = {"my.utm.mentalhealthapp.service", "my.utm.mentalhealthapp.entity"})
+@ComponentScan(basePackages = { "my.utm.mentalhealthapp.service", "my.utm.mentalhealthapp.entity",
+        "my.utm.mentalhealthapp.dao", "my.utm.mentalhealthapp.controller" })
 public class HibernateConfig {
     private static String MYSQL_USERNAME = "root";
     private static String MYSQL_PASSWORD = "admin123";
@@ -21,10 +22,15 @@ public class HibernateConfig {
     public DataSource dataSource() {
         DriverManagerDataSource dataSource = new DriverManagerDataSource();
         dataSource.setDriverClassName("com.mysql.cj.jdbc.Driver");
-        dataSource.setUrl("jdbc:mysql://localhost:3306/mentalhealth_db");
+        dataSource.setUrl(
+  "jdbc:mysql://localhost:3306/mentalhealth_db" +
+  "?useSSL=false" +
+  "&allowPublicKeyRetrieval=true" +
+  "&serverTimezone=UTC"
+);
 
         dataSource.setUsername("root");
-        dataSource.setPassword("admin123");
+        // dataSource.setPassword("admin123");
 
         return dataSource;
     }
